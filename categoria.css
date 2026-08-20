@@ -1,0 +1,446 @@
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f4f4f4;
+
+    color: #111;
+}
+
+
+.contenedor {
+    width: 92%;
+
+    max-width: 1250px;
+
+    margin: auto;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background: #050505;
+
+    color: white;
+}
+
+
+.header-contenido {
+    height: 125px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.logo {
+    font-size: 65px;
+
+    font-weight: 900;
+
+    font-style: italic;
+
+    letter-spacing: -6px;
+
+    color: white;
+}
+
+
+.logo span {
+    color: #168cff;
+}
+
+
+.lema {
+    color: #ddd;
+
+    font-size: 14px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.menu {
+    background: #101010;
+
+    border-bottom: 3px solid #168cff;
+}
+
+
+.menu-contenido {
+    display: flex;
+
+    align-items: center;
+}
+
+
+.menu a {
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    padding: 21px 25px;
+
+    transition: 0.2s;
+}
+
+
+.menu a:hover {
+    background: #168cff;
+}
+
+
+.menu a.activo {
+    color: #168cff;
+
+    border-bottom: 3px solid #168cff;
+}
+
+
+/* =========================
+   PÁGINA CATEGORÍA
+========================= */
+
+.categoria-pagina {
+    padding-top: 50px;
+
+    padding-bottom: 80px;
+}
+
+
+/* =========================
+   TÍTULO
+========================= */
+
+.titulo-categoria {
+    border-bottom: 2px solid #111;
+
+    margin-bottom: 35px;
+
+    padding-bottom: 20px;
+
+    position: relative;
+}
+
+
+.titulo-categoria::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -2px;
+
+    left: 0;
+
+    width: 120px;
+
+    height: 4px;
+
+    background: #168cff;
+}
+
+
+.titulo-categoria span {
+    color: #168cff;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.titulo-categoria h1 {
+    font-family: Georgia, serif;
+
+    font-size: 48px;
+
+    margin: 8px 0;
+}
+
+
+.titulo-categoria p {
+    color: #666;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   NOTICIAS
+========================= */
+
+.noticias-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+
+.card {
+    background: white;
+
+    border: 1px solid #ddd;
+
+    overflow: hidden;
+
+    transition: 0.2s;
+}
+
+
+.card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(
+            0,
+            0,
+            0,
+            0.10
+        );
+}
+
+
+.foto-card {
+    height: 220px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #333,
+            #666
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    font-weight: bold;
+
+    overflow: hidden;
+}
+
+
+.foto-card img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.card-contenido {
+    padding: 20px;
+}
+
+
+.categoria {
+    color: #168cff;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.card h2 {
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
+    line-height: 1.15;
+
+    margin: 10px 0;
+}
+
+
+.card p {
+    color: #666;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+.leer-nota {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    color: #168cff;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.leer-nota:hover {
+    color: #087de0;
+}
+
+
+/* =========================
+   CARGANDO
+========================= */
+
+.cargando {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 70px 20px;
+
+    color: #777;
+}
+
+
+.error-noticias {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 70px 20px;
+
+    color: #c00;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #050505;
+
+    color: white;
+
+    padding: 40px 0;
+}
+
+
+.footer-contenido {
+    text-align: center;
+}
+
+
+.footer-contenido .logo {
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+
+.footer-contenido p {
+    color: #aaa;
+
+    margin: 7px;
+}
+
+
+.copyright {
+    font-size: 12px;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 900px) {
+
+    .header-contenido {
+        height: auto;
+
+        flex-direction: column;
+
+        padding: 20px 0;
+
+        gap: 15px;
+    }
+
+
+    .logo {
+        font-size: 50px;
+    }
+
+
+    .lema {
+        font-size: 11px;
+    }
+
+
+    .menu-contenido {
+        overflow-x: auto;
+    }
+
+
+    .menu a {
+        white-space: nowrap;
+
+        padding: 18px 15px;
+    }
+
+
+    .noticias-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .titulo-categoria h1 {
+        font-size: 38px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .titulo-categoria h1 {
+        font-size: 32px;
+    }
+
+
+    .foto-card {
+        height: 230px;
+    }
+
+}

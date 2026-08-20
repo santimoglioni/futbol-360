@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>F360 | Buscar</title>
+
+
+    <!-- =========================
+         FAVICON
+    ========================== -->
+
+    <link
+        rel="icon"
+        href="./favicon.ico"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="./favicon-16x16.png"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="./favicon-32x32.png"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="48x48"
+        href="./favicon-48x48.png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="./apple-touch-icon.png"
+    >
+
+
+    <!-- =========================
+         ESTILOS
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="./estilos.css"
+    >
+
+
+    <style>
+
+        /* =================================
+           BUSCADOR
+        ================================= */
+
+        .buscar-pagina {
+
+            padding-top: 45px;
+
+            padding-bottom: 70px;
+
+        }
+
+
+        .buscar-titulo {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .buscar-titulo .categoria {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .buscar-titulo h1 {
+
+            font-family: Georgia, serif;
+
+            font-size: 42px;
+
+            margin: 0;
+
+        }
+
+
+        .formulario-busqueda {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .input-busqueda {
+
+            flex: 1;
+
+            height: 52px;
+
+            border: 1px solid #cccccc;
+
+            background: #ffffff;
+
+            padding: 0 16px;
+
+            font-size: 16px;
+
+            outline: none;
+
+        }
+
+
+        .input-busqueda:focus {
+
+            border-color: #168cff;
+
+        }
+
+
+        .boton-busqueda {
+
+            height: 52px;
+
+            border: none;
+
+            background: #111111;
+
+            color: #ffffff;
+
+            padding: 0 25px;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+        }
+
+
+        .boton-busqueda:hover {
+
+            background: #168cff;
+
+        }
+
+
+        .resultado-busqueda {
+
+            margin-bottom: 20px;
+
+            color: #777777;
+
+            font-size: 14px;
+
+        }
+
+
+        .resultado-busqueda strong {
+
+            color: #111111;
+
+        }
+
+
+        .resultados-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .resultado-card {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            overflow: hidden;
+
+        }
+
+
+        .resultado-imagen {
+
+            width: 100%;
+
+            height: 210px;
+
+            background: #111111;
+
+            overflow: hidden;
+
+        }
+
+
+        .resultado-imagen img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .resultado-placeholder {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #168cff;
+
+            font-size: 28px;
+
+            font-weight: 900;
+
+            font-style: italic;
+
+        }
+
+
+        .resultado-contenido {
+
+            padding: 20px;
+
+        }
+
+
+        .resultado-contenido .categoria {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .resultado-contenido h2 {
+
+            font-family: Georgia, serif;
+
+            font-size: 24px;
+
+            line-height: 1.15;
+
+            margin: 0 0 10px 0;
+
+        }
+
+
+        .resultado-contenido p {
+
+            color: #666666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .resultado-contenido a {
+
+            color: #168cff;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            text-decoration: none;
+
+        }
+
+
+        .resultado-contenido a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .sin-resultados {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #666666;
+
+        }
+
+
+        .cargando-busqueda {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #666666;
+
+        }
+
+
+        /* =================================
+           CELULAR
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .resultados-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .buscar-titulo h1 {
+
+                font-size: 34px;
+
+            }
+
+
+            .formulario-busqueda {
+
+                flex-direction: column;
+
+            }
+
+
+            .boton-busqueda {
+
+                width: 100%;
+
+            }
+
+
+            .resultados-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         HEADER
+    ================================= -->
+
+    <header class="header">
+
+        <div class="contenedor header-contenido">
+
+            <a
+                href="./index.html"
+                class="logo"
+            >
+
+                <span>F</span>360
+
+            </a>
+
+
+            <div class="lema">
+
+                TODO EL FÚTBOL,
+                EN UN SOLO LUGAR
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         MENU
+    ================================= -->
+
+    <nav class="menu">
+
+        <div class="contenedor menu-contenido">
+
+
+            <a
+                href="./index.html"
+            >
+
+                INICIO
+
+            </a>
+
+
+            <a
+                href="./categoria.html?categoria=Fútbol%20Argentino"
+            >
+
+                FÚTBOL ARGENTINO
+
+            </a>
+
+
+            <a
+                href="./categoria.html?categoria=Selección"
+            >
+
+                SELECCIÓN
+
+            </a>
+
+
+            <a
+                href="./mercado.html"
+            >
+
+                MERCADO DE PASES
+
+            </a>
+
+
+            <a
+                href="./buscar.html"
+                class="buscar activo"
+            >
+
+                ⌕
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =================================
+         CONTENIDO
+    ================================= -->
+
+    <main class="contenedor buscar-pagina">
+
+
+        <section class="buscar-titulo">
+
+            <span class="categoria">
+
+                F360
+
+            </span>
+
+
+            <h1>
+
+                Buscar noticias
+
+            </h1>
+
+        </section>
+
+
+        <!-- =================================
+             FORMULARIO
+        ================================= -->
+
+        <form
+            id="formulario-busqueda"
+            class="formulario-busqueda"
+        >
+
+            <input
+                type="search"
+                id="input-busqueda"
+                class="input-busqueda"
+                placeholder="Buscá una noticia, jugador, club..."
+                autocomplete="off"
+            >
+
+
+            <button
+                type="submit"
+                class="boton-busqueda"
+            >
+
+                BUSCAR
+
+            </button>
+
+        </form>
+
+
+        <!-- =================================
+             RESULTADO
+        ================================= -->
+
+        <div
+            id="resultado-busqueda"
+            class="resultado-busqueda"
+        >
+
+        </div>
+
+
+        <!-- =================================
+             NOTICIAS
+        ================================= -->
+
+        <section
+            id="resultados-grid"
+            class="resultados-grid"
+        >
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =================================
+         FOOTER
+    ================================= -->
+
+    <footer>
+
+        <div class="contenedor footer-contenido">
+
+
+            <a
+                href="./index.html"
+                class="logo"
+            >
+
+                <span>F</span>360
+
+            </a>
+
+
+            <p>
+
+                Todo el fútbol,
+                en un solo lugar.
+
+            </p>
+
+
+            <p class="copyright">
+
+                © 2026 F360.
+                Todos los derechos reservados.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =================================
+         SUPABASE
+    ================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- =================================
+         BUSCADOR
+    ================================= -->
+
+    <script src="./buscar.js"></script>
+
+
+</body>
+
+</html>

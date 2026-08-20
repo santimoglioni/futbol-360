@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panel F360</title>
+
+    <link rel="stylesheet" href="panel.css">
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+
+    <section id="login-section" class="login-container">
+
+        <div class="login-box">
+
+            <div class="logo">
+                <span>F</span>360
+            </div>
+
+            <h1>Panel de periodista</h1>
+
+            <p>Ingresá para administrar tus notas.</p>
+
+            <form id="login-form">
+
+                <label for="email">Correo electrónico</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="tu@email.com"
+                    required
+                >
+
+                <label for="password">Contraseña</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Tu contraseña"
+                    required
+                >
+
+                <button type="submit">
+                    INICIAR SESIÓN
+                </button>
+
+                <p id="login-message"></p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- PANEL -->
+
+    <section id="panel-section" class="panel-container hidden">
+
+        <header class="panel-header">
+
+            <div class="logo">
+                <span>F</span>360
+            </div>
+
+            <div class="panel-user">
+
+                <span id="usuario-email"></span>
+
+                <button id="logout-button">
+                    CERRAR SESIÓN
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <main class="panel-main">
+
+            <div class="panel-titulo">
+
+                <div>
+                    <span>NUEVA PUBLICACIÓN</span>
+
+                    <h1>Crear una nota</h1>
+                </div>
+
+                <a href="index.html">
+                    ← VOLVER A F360
+                </a>
+
+            </div>
+
+
+            <form id="nota-form" class="nota-form">
+
+
+                <!-- TITULO -->
+
+                <div class="campo">
+
+                    <label for="titulo">
+                        Título
+                    </label>
+
+                    <input
+                        type="text"
+                        id="titulo"
+                        placeholder="Escribí el título de la noticia..."
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BAJADA -->
+
+                <div class="campo">
+
+                    <label for="bajada">
+                        Bajada
+                    </label>
+
+                    <textarea
+                        id="bajada"
+                        rows="3"
+                        placeholder="Una breve descripción que acompañe al título..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- CATEGORIA -->
+
+                <div class="campo">
+
+                    <label for="categoria">
+                        Categoría
+                    </label>
+
+                    <select id="categoria" required>
+
+                        <option value="">
+                            Seleccionar categoría
+                        </option>
+
+                        <option value="Fútbol Argentino">
+                            Fútbol Argentino
+                        </option>
+
+                        <option value="Selección">
+                            Selección
+                        </option>
+
+                        <option value="Mercado de Pases">
+                            Mercado de Pases
+                        </option>
+
+                    </select>
+
+                </div>
+
+<!-- IMAGEN -->
+
+<div class="campo">
+
+    <label for="imagen">
+        Imagen principal
+    </label>
+
+    <input
+        type="file"
+        id="imagen"
+        accept="image/jpeg,image/png,image/webp"
+    >
+
+    <p class="ayuda-imagen">
+        JPG, PNG o WEBP. Máximo 5 MB.
+    </p>
+
+    <div id="preview-container" class="preview-container hidden">
+
+        <img
+            id="preview-imagen"
+            src=""
+            alt="Vista previa"
+        >
+
+    </div>
+
+</div>
+                <!-- CONTENIDO -->
+
+                <div class="campo">
+
+                    <label for="contenido">
+                        Contenido de la nota
+                    </label>
+
+                    <textarea
+                        id="contenido"
+                        class="contenido"
+                        placeholder="Escribí tu nota periodística..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- PUBLICAR -->
+
+                <div class="acciones">
+
+                    <button
+                        type="submit"
+                        id="publicar-button"
+                    >
+                        PUBLICAR NOTA
+                    </button>
+
+                    <span id="nota-message"></span>
+
+                </div>
+
+
+            </form>
+
+        </main>
+
+    </section>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="panel.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>F360 | Noticia</title>
+
+
+    <!-- =========================
+         SEO
+    ========================== -->
+
+    <meta
+        name="description"
+        content="F360, todo el fútbol argentino y la Selección en un solo lugar."
+        id="meta-description"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+
+    <!-- =========================
+         FAVICON
+    ========================== -->
+
+    <link
+        rel="icon"
+        href="favicon.ico"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="favicon-16x16.png"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="favicon-32x32.png"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="48x48"
+        href="favicon-48x48.png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="apple-touch-icon.png"
+    >
+
+
+    <!-- =========================
+         OPEN GRAPH
+    ========================== -->
+
+    <meta
+        property="og:type"
+        content="article"
+    >
+
+    <meta
+        property="og:site_name"
+        content="F360"
+    >
+
+    <meta
+        property="og:title"
+        content="F360 | Noticia"
+        id="og-title"
+    >
+
+    <meta
+        property="og:description"
+        content="Todo el fútbol argentino y la Selección en un solo lugar."
+        id="og-description"
+    >
+
+    <meta
+        property="og:image"
+        content=""
+        id="og-image"
+    >
+
+    <meta
+        property="og:url"
+        content=""
+        id="og-url"
+    >
+
+
+    <!-- =========================
+         TWITTER / X
+    ========================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="F360 | Noticia"
+        id="twitter-title"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Todo el fútbol argentino y la Selección en un solo lugar."
+        id="twitter-description"
+    >
+
+    <meta
+        name="twitter:image"
+        content=""
+        id="twitter-image"
+    >
+
+
+    <!-- =========================
+         CANONICAL
+    ========================== -->
+
+    <link
+        rel="canonical"
+        href=""
+        id="canonical-url"
+    >
+
+
+    <!-- =========================
+         ESTILOS
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="noticia.css"
+    >
+
+
+    <style>
+
+        /* =================================
+           CONTENEDOR
+        ================================= */
+
+        .noticia-pagina {
+
+            padding-top: 40px;
+
+            padding-bottom: 70px;
+
+        }
+
+
+        /* =================================
+           NAVEGACIÓN
+        ================================= */
+
+        .noticia-navegacion {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .volver {
+
+            display: inline-block;
+
+            color: #168cff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+        }
+
+
+        .volver:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =================================
+           ARTÍCULO
+        ================================= */
+
+        .noticia {
+
+            max-width: 900px;
+
+            margin: 0 auto;
+
+        }
+
+
+        .noticia-categoria {
+
+            display: inline-block;
+
+            color: #168cff;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .noticia h1 {
+
+            font-family: Georgia, serif;
+
+            font-size: 54px;
+
+            line-height: 1.03;
+
+            margin: 0 0 18px 0;
+
+            color: #111;
+
+        }
+
+
+        .noticia-bajada {
+
+            font-size: 20px;
+
+            line-height: 1.5;
+
+            color: #666;
+
+            margin: 0 0 18px 0;
+
+            max-width: 820px;
+
+        }
+
+
+        /* =================================
+           META
+        ================================= */
+
+        .noticia-meta {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .noticia-meta strong {
+
+            color: #111;
+
+        }
+
+
+        .noticia-meta-separador {
+
+            color: #bbb;
+
+        }
+
+
+        /* =================================
+           COMPARTIR
+        ================================= */
+
+        .noticia-acciones {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .accion-noticia {
+
+            border: 1px solid #d9d9d9;
+
+            background: #fff;
+
+            color: #111;
+
+            padding: 9px 13px;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .accion-noticia:hover {
+
+            border-color: #168cff;
+
+            color: #168cff;
+
+        }
+
+
+        .accion-noticia.whatsapp:hover {
+
+            border-color: #25d366;
+
+            color: #25d366;
+
+        }
+
+
+        /* =================================
+           IMAGEN PRINCIPAL
+        ================================= */
+
+        .noticia-imagen-contenedor {
+
+            width: 100%;
+
+            margin: 0 0 30px 0;
+
+            background: #111;
+
+        }
+
+
+        .noticia-imagen {
+
+            width: 100%;
+
+            max-height: 560px;
+
+            display: block;
+
+            object-fit: cover;
+
+        }
+
+
+        /* =================================
+           CONTENIDO
+        ================================= */
+
+        .noticia-contenido {
+
+            font-size: 19px;
+
+            line-height: 1.8;
+
+            color: #242424;
+
+        }
+
+
+        .noticia-contenido p {
+
+            margin: 0 0 22px 0;
+
+        }
+
+
+        /* =================================
+           RELACIONADAS
+        ================================= */
+
+        .noticias-relacionadas {
+
+            max-width: 1100px;
+
+            margin: 60px auto 0 auto;
+
+            padding-top: 30px;
+
+            border-top: 1px solid #ddd;
+
+        }
+
+
+        .relacionadas-titulo {
+
+            font-family: Georgia, serif;
+
+            font-size: 30px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .relacionadas-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        .relacionada-card {
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            overflow: hidden;
+
+        }
+
+
+        .relacionada-imagen {
+
+            width: 100%;
+
+            height: 170px;
+
+            background: #111;
+
+            overflow: hidden;
+
+        }
+
+
+        .relacionada-imagen img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .relacionada-placeholder {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #168cff;
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            font-style: italic;
+
+        }
+
+
+        .relacionada-contenido {
+
+            padding: 16px;
+
+        }
+
+
+        .relacionada-categoria {
+
+            display: block;
+
+            color: #168cff;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .relacionada-titulo {
+
+            display: block;
+
+            color: #111;
+
+            font-family: Georgia, serif;
+
+            font-size: 21px;
+
+            line-height: 1.15;
+
+            text-decoration: none;
+
+        }
+
+
+        .relacionada-titulo:hover {
+
+            color: #168cff;
+
+        }
+
+
+        /* =================================
+           ESTADOS
+        ================================= */
+
+        .cargando,
+        .error-noticia {
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #666;
+
+        }
+
+
+        /* =================================
+           CELULAR
+        ================================= */
+
+        @media (max-width: 800px) {
+
+            .noticia h1 {
+
+                font-size: 40px;
+
+            }
+
+
+            .noticia-bajada {
+
+                font-size: 18px;
+
+            }
+
+
+            .noticia-contenido {
+
+                font-size: 17px;
+
+                line-height: 1.7;
+
+            }
+
+
+            .relacionadas-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .noticia-pagina {
+
+                padding-top: 25px;
+
+            }
+
+
+            .noticia h1 {
+
+                font-size: 34px;
+
+            }
+
+
+            .noticia-bajada {
+
+                font-size: 16px;
+
+            }
+
+
+            .noticia-imagen {
+
+                max-height: 360px;
+
+            }
+
+
+            .accion-noticia {
+
+                flex: 1;
+
+                min-width: 130px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         HEADER
+    ================================= -->
+
+    <header class="header">
+
+        <div class="contenedor header-contenido">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+
+                <span>F</span>360
+
+            </a>
+
+
+            <div class="lema">
+
+                TODO EL FÚTBOL,
+                EN UN SOLO LUGAR
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         MENU
+    ================================= -->
+
+    <nav class="menu">
+
+        <div class="contenedor menu-contenido">
+
+
+            <a href="index.html">
+
+                INICIO
+
+            </a>
+
+
+            <a
+                href="categoria.html?categoria=Fútbol%20Argentino"
+            >
+
+                FÚTBOL ARGENTINO
+
+            </a>
+
+
+            <a
+                href="categoria.html?categoria=Selección"
+            >
+
+                SELECCIÓN
+
+            </a>
+
+
+            <a
+                href="mercado.html"
+            >
+
+                MERCADO DE PASES
+
+            </a>
+
+
+            <a
+                href="buscar.html"
+                class="buscar"
+            >
+
+                ⌕
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =================================
+         NOTICIA
+    ================================= -->
+
+    <main class="contenedor noticia-pagina">
+
+
+        <div
+            id="noticia-container"
+        >
+
+            <p class="cargando">
+
+                Cargando noticia...
+
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =================================
+         FOOTER
+    ================================= -->
+
+    <footer>
+
+        <div class="contenedor footer-contenido">
+
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+
+                <span>F</span>360
+
+            </a>
+
+
+            <p>
+
+                Todo el fútbol,
+                en un solo lugar.
+
+            </p>
+
+
+            <p class="copyright">
+
+                © 2026 F360.
+                Todos los derechos reservados.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =================================
+         SUPABASE
+    ================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="noticia.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>F360 | Jugador</title>
+
+    <link
+        rel="stylesheet"
+        href="estilos.css"
+    >
+
+    <style>
+
+        /* =========================================
+           PÁGINA
+        ========================================= */
+
+        .jugador-pagina {
+
+            padding-top: 40px;
+
+            padding-bottom: 70px;
+
+        }
+
+
+        /* =========================================
+           VOLVER
+        ========================================= */
+
+        .volver-mercado {
+
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            color: #168cff;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+        }
+
+
+        .volver-mercado:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================================
+           CABECERA DEL JUGADOR
+        ========================================= */
+
+        .jugador-header {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 35px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .jugador-header-foto {
+
+            width: 220px;
+
+            height: 220px;
+
+            flex-shrink: 0;
+
+            background: #111111;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .jugador-header-foto img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            object-position: center top;
+
+        }
+
+
+        .jugador-header-placeholder {
+
+            color: #168cff;
+
+            font-size: 35px;
+
+            font-weight: 900;
+
+            font-style: italic;
+
+        }
+
+
+        .jugador-header-info {
+
+            flex: 1;
+
+        }
+
+
+        .jugador-categoria {
+
+            color: #168cff;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .jugador-header h1 {
+
+            font-family: Georgia, serif;
+
+            font-size: 55px;
+
+            line-height: 1;
+
+            margin: 0 0 22px 0;
+
+            color: #111111;
+
+        }
+
+
+        .jugador-datos {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+        }
+
+
+        .dato-jugador {
+
+            background: #fafafa;
+
+            border: 1px solid #dddddd;
+
+            padding: 10px 14px;
+
+            font-size: 14px;
+
+        }
+
+
+        .dato-jugador strong {
+
+            color: #111111;
+
+        }
+
+
+        /* =========================================
+           PERFIL
+        ========================================= */
+
+        .perfil-jugador {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 28px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .perfil-titulo {
+
+            color: #168cff;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .perfil-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            border: 1px solid #dddddd;
+
+        }
+
+
+        .perfil-dato {
+
+            background: #ffffff;
+
+            padding: 18px;
+
+            min-height: 75px;
+
+            border-right: 1px solid #dddddd;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            gap: 7px;
+
+        }
+
+
+        .perfil-dato:last-child {
+
+            border-right: none;
+
+        }
+
+
+        .perfil-dato span {
+
+            color: #777777;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .perfil-dato strong {
+
+            color: #111111;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =========================================
+           AVISO API
+        ========================================= */
+
+        .perfil-aviso {
+
+            background: #fff3cd;
+
+            border: 1px solid #e5c76b;
+
+            padding: 13px 15px;
+
+            margin-bottom: 20px;
+
+            color: #6b5700;
+
+            font-size: 13px;
+
+        }
+
+
+        .perfil-aviso strong {
+
+            display: block;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .perfil-aviso small {
+
+            display: block;
+
+            color: #806900;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =========================================
+           HISTORIAL
+        ========================================= */
+
+        .historial-titulo {
+
+            font-family: Georgia, serif;
+
+            font-size: 36px;
+
+            line-height: 1.1;
+
+            margin: 0 0 20px 0;
+
+            color: #111111;
+
+        }
+
+
+        .historial {
+
+            display: grid;
+
+            gap: 12px;
+
+        }
+
+
+        .movimiento-jugador {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+        }
+
+
+        .movimiento-ruta {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .club-jugador {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-weight: 700;
+
+            font-size: 15px;
+
+        }
+
+
+        .club-jugador img {
+
+            width: 40px;
+
+            height: 40px;
+
+            object-fit: contain;
+
+        }
+
+
+        .escudo-vacio {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #111111;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+        }
+
+
+        .flecha-jugador {
+
+            color: #168cff;
+
+            font-size: 25px;
+
+            font-weight: 900;
+
+        }
+
+
+        .movimiento-meta {
+
+            text-align: right;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .tipo-jugador {
+
+            display: inline-block;
+
+            background: #111111;
+
+            color: #ffffff;
+
+            padding: 7px 10px;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            margin-bottom: 7px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .fecha-jugador {
+
+            color: #777777;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           CARGANDO
+        ========================================= */
+
+        .jugador-cargando {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 50px;
+
+            text-align: center;
+
+            color: #666666;
+
+        }
+
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        .jugador-error {
+
+            background: #ffffff;
+
+            border: 1px solid #dddddd;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #555555;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1000px) {
+
+            .perfil-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+            }
+
+
+            .perfil-dato {
+
+                border-bottom: 1px solid #dddddd;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .jugador-header {
+
+                padding: 25px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .jugador-header-foto {
+
+                width: 150px;
+
+                height: 150px;
+
+            }
+
+
+            .jugador-header h1 {
+
+                font-size: 40px;
+
+            }
+
+
+            .perfil-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .perfil-dato {
+
+                border-right: none;
+
+                border-bottom: 1px solid #dddddd;
+
+            }
+
+
+            .movimiento-jugador {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .movimiento-meta {
+
+                text-align: left;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header class="header">
+
+        <div class="contenedor header-contenido">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+
+                <span>F</span>360
+
+            </a>
+
+
+            <div class="lema">
+
+                TODO EL FÚTBOL,
+                EN UN SOLO LUGAR
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MENU
+    ========================================= -->
+
+    <nav class="menu">
+
+        <div class="contenedor menu-contenido">
+
+            <a href="index.html">
+
+                INICIO
+
+            </a>
+
+
+            <a
+                href="categoria.html?categoria=Fútbol%20Argentino"
+            >
+
+                FÚTBOL ARGENTINO
+
+            </a>
+
+
+            <a
+                href="categoria.html?categoria=Selección"
+            >
+
+                SELECCIÓN
+
+            </a>
+
+
+            <a
+                href="mercado.html"
+                class="activo"
+            >
+
+                MERCADO DE PASES
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================
+         CONTENIDO
+    ========================================= -->
+
+    <main class="contenedor jugador-pagina">
+
+
+        <a
+            href="mercado.html"
+            class="volver-mercado"
+        >
+
+            ← VOLVER AL MERCADO
+
+        </a>
+
+
+        <section
+            id="jugador-contenido"
+        >
+
+            <div class="jugador-cargando">
+
+                Cargando información del jugador...
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        <div class="contenedor footer-contenido">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+
+                <span>F</span>360
+
+            </a>
+
+
+            <p>
+
+                Todo el fútbol,
+                en un solo lugar.
+
+            </p>
+
+
+            <p class="copyright">
+
+                © 2026 F360.
+                Todos los derechos reservados.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================
+         SUPABASE
+    ========================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script src="jugador.js"></script>
+
+
+</body>
+
+</html>

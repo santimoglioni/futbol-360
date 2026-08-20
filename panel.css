@@ -1,0 +1,383 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f4f6;
+    color: #111;
+}
+
+
+/* =========================
+   GENERAL
+========================= */
+
+.hidden {
+    display: none !important;
+}
+
+.logo {
+    font-size: 48px;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -5px;
+}
+
+.logo span {
+    color: #168cff;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-container {
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #050505,
+            #151515
+        );
+}
+
+.login-box {
+    width: 90%;
+    max-width: 430px;
+
+    background: white;
+
+    padding: 45px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+.login-box .logo {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.login-box h1 {
+    text-align: center;
+
+    font-family: Georgia, serif;
+
+    margin-bottom: 8px;
+}
+
+.login-box > p {
+    text-align: center;
+
+    color: #666;
+
+    margin-bottom: 30px;
+}
+
+
+/* FORMULARIO */
+
+#login-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+label {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    margin-top: 12px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    border: 1px solid #ccc;
+
+    padding: 14px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 15px;
+
+    outline: none;
+
+    background: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #168cff;
+}
+
+#login-form button,
+#publicar-button {
+    border: none;
+
+    background: #087de0;
+
+    color: white;
+
+    padding: 15px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 20px;
+}
+
+#login-form button:hover,
+#publicar-button:hover {
+    background: #168cff;
+}
+
+#login-message,
+#nota-message {
+    font-size: 13px;
+
+    margin-top: 12px;
+}
+
+
+/* =========================
+   PANEL HEADER
+========================= */
+
+.panel-header {
+    height: 90px;
+
+    background: #050505;
+
+    color: white;
+
+    padding: 0 5%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.panel-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+#usuario-email {
+    color: #bbb;
+
+    font-size: 13px;
+}
+
+#logout-button {
+    background: transparent;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    padding: 10px 15px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    border-color: #168cff;
+
+    color: #168cff;
+}
+
+
+/* =========================
+   CONTENIDO PANEL
+========================= */
+
+.panel-main {
+    width: 90%;
+
+    max-width: 900px;
+
+    margin: 50px auto;
+}
+
+.panel-titulo {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: end;
+
+    margin-bottom: 30px;
+}
+
+.panel-titulo span {
+    color: #168cff;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.panel-titulo h1 {
+    font-family: Georgia, serif;
+
+    font-size: 36px;
+
+    margin-top: 5px;
+}
+
+.panel-titulo a {
+    color: #168cff;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   NOTA
+========================= */
+
+.nota-form {
+    background: white;
+
+    padding: 40px;
+
+    border: 1px solid #ddd;
+}
+
+.campo {
+    margin-bottom: 22px;
+}
+
+.campo label {
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+.contenido {
+    min-height: 450px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.acciones {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    border-top: 1px solid #ddd;
+
+    padding-top: 25px;
+}
+
+#publicar-button {
+    margin: 0;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 700px) {
+
+    .panel-header {
+        height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .panel-user {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .panel-main {
+        width: 94%;
+
+        margin: 30px auto;
+    }
+
+    .panel-titulo {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .nota-form {
+        padding: 25px;
+    }
+
+    .logo {
+        font-size: 40px;
+    }
+
+}/* =========================
+   IMAGEN DE LA NOTA
+========================= */
+
+.ayuda-imagen {
+    color: #777;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.preview-container {
+    margin-top: 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.preview-container img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    display: block;
+    border: 1px solid #ddd;
+}
+
+.hidden {
+    display: none !important;
+}

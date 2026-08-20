@@ -1,0 +1,318 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f4f4f4;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   GENERAL
+========================= */
+
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.header-contenido {
+    min-height: 110px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 48px;
+
+    font-weight: 900;
+
+    font-style: italic;
+
+    letter-spacing: -5px;
+
+    color: #111;
+
+    text-decoration: none;
+}
+
+.logo span {
+    color: #168cff;
+}
+
+.lema {
+    font-size: 15px;
+
+    color: #555;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.menu {
+    background: #080808;
+}
+
+.menu-contenido {
+    min-height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 45px;
+}
+
+.menu a {
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.menu a:hover {
+    color: #168cff;
+}
+
+
+/* =========================
+   NOTICIA
+========================= */
+
+.noticia-pagina {
+    max-width: 1000px;
+
+    margin-top: 60px;
+
+    margin-bottom: 80px;
+}
+
+.noticia {
+    background: white;
+
+    padding: 50px 65px;
+}
+
+.noticia-categoria {
+    color: #168cff;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    margin-bottom: 15px;
+}
+
+.noticia h1 {
+    font-family: Georgia, serif;
+
+    font-size: 54px;
+
+    line-height: 1.05;
+
+    margin-bottom: 20px;
+}
+
+.noticia-bajada {
+    font-size: 21px;
+
+    color: #555;
+
+    line-height: 1.5;
+
+    margin-bottom: 30px;
+}
+
+.noticia-meta {
+    border-top: 1px solid #ddd;
+
+    border-bottom: 1px solid #ddd;
+
+    padding: 15px 0;
+
+    margin-bottom: 35px;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+.noticia-imagen {
+    width: 100%;
+
+    max-height: 600px;
+
+    object-fit: cover;
+
+    display: block;
+
+    margin-bottom: 40px;
+}
+
+.noticia-contenido {
+    font-family: Georgia, serif;
+
+    font-size: 19px;
+
+    line-height: 1.8;
+
+    white-space: pre-line;
+}
+
+.noticia-contenido p {
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   VOLVER
+========================= */
+
+.volver {
+    display: inline-block;
+
+    margin-bottom: 25px;
+
+    color: #168cff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   CARGANDO / ERROR
+========================= */
+
+.cargando {
+    text-align: center;
+
+    padding: 80px;
+
+    color: #777;
+}
+
+.error-noticia {
+    background: white;
+
+    padding: 60px;
+
+    text-align: center;
+
+    color: #c00;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #080808;
+
+    color: white;
+
+    padding: 40px 0;
+}
+
+.footer-contenido {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.footer-contenido p {
+    color: #aaa;
+}
+
+.footer-contenido .copyright {
+    font-size: 12px;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 700px) {
+
+    .header-contenido {
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        padding: 20px;
+    }
+
+    .menu-contenido {
+        gap: 20px;
+
+        overflow-x: auto;
+
+        padding: 15px 0;
+    }
+
+    .noticia-pagina {
+        width: 94%;
+
+        margin-top: 30px;
+    }
+
+    .noticia {
+        padding: 30px 20px;
+    }
+
+    .noticia h1 {
+        font-size: 38px;
+    }
+
+    .noticia-bajada {
+        font-size: 18px;
+    }
+
+    .noticia-contenido {
+        font-size: 17px;
+    }
+
+    .footer-contenido {
+        flex-direction: column;
+
+        gap: 15px;
+
+        text-align: center;
+    }
+
+}
