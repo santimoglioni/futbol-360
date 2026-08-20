@@ -3,6 +3,10 @@
 
 <head>
 
+    <!-- =========================
+         CONFIGURACIÓN BÁSICA
+    ========================== -->
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,16 +14,39 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>F360 | Todo el fútbol, en un solo lugar</title>
+
+    <!-- =========================
+         GOOGLE SEARCH CONSOLE
+    ========================== -->
+
+    <meta
+        name="google-site-verification"
+        content="<meta name="google-site-verification" 
+        content="SCm85ycCRstBmZPo327qub-9sIGQs66S--KNOdZ6DY0" />"
+    >
+
+
+    <!-- =========================
+         SEO
+    ========================== -->
+
+    <title>
+        F360 | Todo el fútbol, en un solo lugar
+    </title>
 
     <meta
         name="description"
-        content="F360, todo el fútbol argentino y la Selección en un solo lugar."
+        content="F360, todo el fútbol argentino y la Selección en un solo lugar. Noticias, actualidad, resultados y protagonistas."
     >
 
     <meta
         name="robots"
         content="index, follow"
+    >
+
+    <meta
+        name="author"
+        content="F360"
     >
 
 
@@ -61,6 +88,16 @@
 
 
     <!-- =========================
+         URL CANÓNICA
+    ========================== -->
+
+    <link
+        rel="canonical"
+        href="https://futbol-360.vercel.app/"
+    >
+
+
+    <!-- =========================
          OPEN GRAPH
     ========================== -->
 
@@ -85,6 +122,11 @@
     >
 
     <meta
+        property="og:url"
+        content="https://futbol-360.vercel.app/"
+    >
+
+    <meta
         property="og:image"
         content=""
         id="og-image"
@@ -92,7 +134,7 @@
 
 
     <!-- =========================
-         TWITTER
+         TWITTER / X
     ========================== -->
 
     <meta
@@ -142,6 +184,7 @@
             <a
                 href="index.html"
                 class="logo"
+                aria-label="F360 - Inicio"
             >
 
                 <span>F</span>360
@@ -164,45 +207,62 @@
          MENU
     ========================== -->
 
-    <nav class="menu">
+    <nav
+        class="menu"
+        aria-label="Navegación principal"
+    >
 
         <div class="contenedor menu-contenido">
+
 
             <a
                 href="index.html"
                 class="activo"
             >
+
                 INICIO
+
             </a>
 
 
             <a
                 href="categoria.html?categoria=Fútbol%20Argentino"
             >
+
                 FÚTBOL ARGENTINO
+
             </a>
 
 
             <a
                 href="categoria.html?categoria=Selección"
             >
+
                 SELECCIÓN
+
             </a>
 
 
             <a
                 href="mercado.html"
             >
+
                 MERCADO DE PASES
+
             </a>
 
 
             <button
                 class="buscar"
                 type="button"
+                aria-label="Buscar noticias"
+                onclick="window.location.href='buscar.html'"
             >
+
                 ⌕
+
             </button>
+
 
         </div>
 
@@ -210,7 +270,7 @@
 
 
     <!-- =========================
-         CONTENIDO
+         CONTENIDO PRINCIPAL
     ========================== -->
 
     <main class="contenedor pagina">
@@ -220,20 +280,27 @@
              NOTICIA PRINCIPAL
         ========================== -->
 
-        <section class="noticia-principal">
+        <section
+            class="noticia-principal"
+            aria-label="Noticia principal"
+        >
 
             <div
                 class="foto-principal"
                 id="noticia-principal"
             >
 
+
                 <div class="texto-principal">
+
 
                     <span
                         class="categoria"
                         id="principal-categoria"
                     >
+
                         CARGANDO...
+
                     </span>
 
 
@@ -261,6 +328,7 @@
 
                     </a>
 
+
                 </div>
 
             </div>
@@ -274,10 +342,13 @@
 
         <aside class="mas-leidas">
 
+
             <div class="titulo-seccion">
 
                 <h2>
+
                     LO ÚLTIMO
+
                 </h2>
 
             </div>
@@ -293,6 +364,7 @@
 
             </div>
 
+
         </aside>
 
 
@@ -302,10 +374,13 @@
 
         <section class="ultimas">
 
+
             <div class="titulo-seccion">
 
                 <h2>
+
                     ÚLTIMAS NOTICIAS
+
                 </h2>
 
             </div>
@@ -324,14 +399,16 @@
 
             </div>
 
+
         </section>
 
 
         <!-- =========================
-             MERCADO
+             MERCADO DE PASES
         ========================== -->
 
         <section class="mercado">
+
 
             <span class="categoria">
 
@@ -349,8 +426,8 @@
 
             <p>
 
-                Altas, bajas y transferencias de los principales equipos
-                del fútbol argentino.
+                Altas, bajas y transferencias de los principales
+                equipos del fútbol argentino.
 
             </p>
 
@@ -371,6 +448,7 @@
 
             </div>
 
+
         </section>
 
 
@@ -383,11 +461,14 @@
 
     <footer>
 
+
         <div class="contenedor footer-contenido">
+
 
             <a
                 href="index.html"
                 class="logo"
+                aria-label="F360 - Inicio"
             >
 
                 <span>F</span>360
@@ -408,7 +489,9 @@
 
             </p>
 
+
         </div>
+
 
     </footer>
 
@@ -423,10 +506,12 @@
 
 
     <!-- =========================
-         JAVASCRIPT
+         JAVASCRIPT F360
     ========================== -->
 
-    <script src="script.js"></script>
+    <script
+        src="script.js"
+    ></script>
 
 
 </body>
