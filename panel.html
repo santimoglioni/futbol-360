@@ -2,55 +2,136 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Panel F360</title>
 
-    <link rel="stylesheet" href="panel.css">
+    <link
+        rel="stylesheet"
+        href="panel.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- LOGIN -->
 
-    <section id="login-section" class="login-container">
+    <!-- =================================
+         LOGIN
+    ================================== -->
+
+    <section
+        id="login-section"
+        class="login-container"
+    >
 
         <div class="login-box">
 
+
             <div class="logo">
+
                 <span>F</span>360
+
             </div>
 
-            <h1>Panel de periodista</h1>
 
-            <p>Ingresá para administrar tus notas.</p>
+            <div class="login-etiqueta">
 
-            <form id="login-form">
+                PANEL PRIVADO
 
-                <label for="email">Correo electrónico</label>
+            </div>
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="tu@email.com"
-                    required
+
+            <h1>
+
+                Panel de periodista
+
+            </h1>
+
+
+            <p>
+
+                Ingresá para administrar
+                tus publicaciones.
+
+            </p>
+
+
+            <form
+                id="login-form"
+            >
+
+
+                <!-- EMAIL -->
+
+                <div class="campo">
+
+                    <label
+                        for="email"
+                    >
+
+                        Correo electrónico
+
+                    </label>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="tu@email.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="campo">
+
+                    <label
+                        for="password"
+                    >
+
+                        Contraseña
+
+                    </label>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Tu contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="boton-principal"
                 >
 
-                <label for="password">Contraseña</label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Tu contraseña"
-                    required
-                >
-
-                <button type="submit">
                     INICIAR SESIÓN
+
                 </button>
 
-                <p id="login-message"></p>
+
+                <p
+                    id="login-message"
+                    class="mensaje"
+                ></p>
+
 
             </form>
 
@@ -59,22 +140,57 @@
     </section>
 
 
-    <!-- PANEL -->
 
-    <section id="panel-section" class="panel-container hidden">
+    <!-- =================================
+         PANEL
+    ================================== -->
+
+    <section
+        id="panel-section"
+        class="panel-container hidden"
+    >
+
+
+        <!-- HEADER -->
 
         <header class="panel-header">
 
-            <div class="logo">
+
+            <a
+                href="index.html"
+                class="panel-logo"
+            >
+
                 <span>F</span>360
-            </div>
 
-            <div class="panel-user">
+            </a>
 
-                <span id="usuario-email"></span>
 
-                <button id="logout-button">
+            <div
+                class="panel-user"
+            >
+
+                <div>
+
+                    <small>
+                        SESIÓN
+                    </small>
+
+
+                    <span
+                        id="usuario-email"
+                    ></span>
+
+                </div>
+
+
+                <button
+                    id="logout-button"
+                    type="button"
+                >
+
                     CERRAR SESIÓN
+
                 </button>
 
             </div>
@@ -82,51 +198,116 @@
         </header>
 
 
-        <main class="panel-main">
 
-            <div class="panel-titulo">
+        <!-- CONTENIDO -->
+
+        <main
+            class="panel-main"
+        >
+
+
+            <!-- CABECERA -->
+
+            <div
+                class="panel-titulo"
+            >
+
 
                 <div>
-                    <span>NUEVA PUBLICACIÓN</span>
 
-                    <h1>Crear una nota</h1>
+                    <span>
+                        NUEVA PUBLICACIÓN
+                    </span>
+
+
+                    <h1>
+                        Crear una nota
+                    </h1>
+
                 </div>
 
-                <a href="index.html">
-                    ← VOLVER A F360
-                </a>
+
+                <div
+                    class="panel-enlaces"
+                >
+
+                    <a
+                        href="estadisticas.html"
+                    >
+
+                        📊 ESTADÍSTICAS
+
+                    </a>
+
+
+                    <a
+                        href="index.html"
+                    >
+
+                        ← VOLVER A F360
+
+                    </a>
+
+                </div>
+
 
             </div>
 
 
-            <form id="nota-form" class="nota-form">
+
+            <!-- FORMULARIO -->
+
+            <form
+                id="nota-form"
+                class="nota-form"
+            >
 
 
-                <!-- TITULO -->
+                <!-- =================================
+                     TÍTULO
+                ================================== -->
 
-                <div class="campo">
+                <div
+                    class="campo"
+                >
 
-                    <label for="titulo">
+                    <label
+                        for="titulo"
+                    >
+
                         Título
+
                     </label>
+
 
                     <input
                         type="text"
                         id="titulo"
                         placeholder="Escribí el título de la noticia..."
+                        autocomplete="off"
                         required
                     >
 
                 </div>
 
 
-                <!-- BAJADA -->
 
-                <div class="campo">
+                <!-- =================================
+                     BAJADA
+                ================================== -->
 
-                    <label for="bajada">
+                <div
+                    class="campo"
+                >
+
+                    <label
+                        for="bajada"
+                    >
+
                         Bajada
+
                     </label>
+
 
                     <textarea
                         id="bajada"
@@ -137,95 +318,184 @@
                 </div>
 
 
-                <!-- CATEGORIA -->
 
-                <div class="campo">
+                <!-- =================================
+                     CATEGORÍA
+                ================================== -->
 
-                    <label for="categoria">
+                <div
+                    class="campo"
+                >
+
+                    <label
+                        for="categoria"
+                    >
+
                         Categoría
+
                     </label>
 
-                    <select id="categoria" required>
 
-                        <option value="">
+                    <select
+                        id="categoria"
+                        required
+                    >
+
+                        <option
+                            value=""
+                        >
+
                             Seleccionar categoría
+
                         </option>
 
-                        <option value="Fútbol Argentino">
+
+                        <option
+                            value="Fútbol Argentino"
+                        >
+
                             Fútbol Argentino
+
                         </option>
 
-                        <option value="Selección">
+
+                        <option
+                            value="Selección"
+                        >
+
                             Selección
+
                         </option>
 
-                        <option value="Mercado de Pases">
+
+                        <option
+                            value="Mercado de Pases"
+                        >
+
                             Mercado de Pases
+
                         </option>
 
                     </select>
 
                 </div>
 
-<!-- IMAGEN -->
 
-<div class="campo">
 
-    <label for="imagen">
-        Imagen principal
-    </label>
+                <!-- =================================
+                     IMAGEN
+                ================================== -->
 
-    <input
-        type="file"
-        id="imagen"
-        accept="image/jpeg,image/png,image/webp"
-    >
+                <div
+                    class="campo"
+                >
 
-    <p class="ayuda-imagen">
-        JPG, PNG o WEBP. Máximo 5 MB.
-    </p>
+                    <label
+                        for="imagen"
+                    >
 
-    <div id="preview-container" class="preview-container hidden">
+                        Imagen principal
 
-        <img
-            id="preview-imagen"
-            src=""
-            alt="Vista previa"
-        >
-
-    </div>
-
-</div>
-                <!-- CONTENIDO -->
-
-                <div class="campo">
-
-                    <label for="contenido">
-                        Contenido de la nota
                     </label>
 
-                    <textarea
-                        id="contenido"
-                        class="contenido"
-                        placeholder="Escribí tu nota periodística..."
-                        required
-                    ></textarea>
+
+                    <input
+                        type="file"
+                        id="imagen"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+
+
+                    <p
+                        class="ayuda-imagen"
+                    >
+
+                        JPG, PNG o WEBP.
+                        Máximo 5 MB.
+
+                    </p>
+
+
+                    <div
+                        id="preview-container"
+                        class="preview-container hidden"
+                    >
+
+                        <img
+                            id="preview-imagen"
+                            src=""
+                            alt="Vista previa de la imagen"
+                        >
+
+                    </div>
 
                 </div>
 
 
-                <!-- PUBLICAR -->
 
-                <div class="acciones">
+                <!-- =================================
+                     CONTENIDO
+                ================================== -->
+
+                <div
+                    class="campo"
+                >
+
+                    <label
+                        for="contenido"
+                    >
+
+                        Contenido de la nota
+
+                    </label>
+
+
+                    <textarea
+                        id="contenido"
+                        class="contenido"
+                        placeholder="Escribí tu nota periodística...
+
+Separá los párrafos con Enter."
+                        required
+                    ></textarea>
+
+
+                    <p
+                        class="ayuda-contenido"
+                    >
+
+                        Cada Enter genera un nuevo
+                        párrafo en la noticia.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================
+                     ACCIONES
+                ================================== -->
+
+                <div
+                    class="acciones"
+                >
 
                     <button
                         type="submit"
                         id="publicar-button"
+                        class="boton-publicar"
                     >
+
                         PUBLICAR NOTA
+
                     </button>
 
-                    <span id="nota-message"></span>
+
+                    <span
+                        id="nota-message"
+                        class="mensaje"
+                    ></span>
 
                 </div>
 
@@ -237,11 +507,24 @@
     </section>
 
 
-    <!-- SUPABASE -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- =================================
+         SUPABASE
+    ================================== -->
 
-    <script src="panel.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================== -->
+
+    <script
+        src="panel.js"
+    ></script>
+
 
 </body>
 
