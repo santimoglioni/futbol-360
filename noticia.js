@@ -13,6 +13,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
 
+
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -38,6 +39,7 @@ const parametros =
     new URLSearchParams(
         window.location.search
     );
+
 
 const noticiaId =
     parametros.get("id");
@@ -128,18 +130,32 @@ async function mostrarNoticia(noticia) {
         "F360";
 
 
-    const fecha =
+    // ======================================
+    // FECHAS
+    // ======================================
+
+    const fechaPublicacion =
         noticia.created_at
             ? new Date(noticia.created_at)
             : new Date();
 
 
+    const fechaModificacion =
+        noticia.updated_at
+            ? new Date(noticia.updated_at)
+            : fechaPublicacion;
+
+
     const fechaISO =
-        fecha.toISOString();
+        fechaPublicacion.toISOString();
+
+
+    const fechaModificacionISO =
+        fechaModificacion.toISOString();
 
 
     const fechaVisible =
-        fecha.toLocaleDateString(
+        fechaPublicacion.toLocaleDateString(
             "es-AR",
             {
                 day: "2-digit",
@@ -150,7 +166,7 @@ async function mostrarNoticia(noticia) {
 
 
     const horaVisible =
-        fecha.toLocaleTimeString(
+        fechaPublicacion.toLocaleTimeString(
             "es-AR",
             {
                 hour: "2-digit",
@@ -160,11 +176,22 @@ async function mostrarNoticia(noticia) {
 
 
     // ======================================
+    // IMAGEN
+    // ======================================
+
+    const imagen =
+        noticia.imagen_url ||
+        "";
+
+
+    // ======================================
     // URL LIMPIA
     // ======================================
 
     const urlLimpia =
-        crearURLLimpia(noticia.id);
+        crearURLLimpia(
+            noticia.id
+        );
 
 
     // ======================================
@@ -196,11 +223,14 @@ async function mostrarNoticia(noticia) {
         fechaISO:
             fechaISO,
 
+        fechaModificacionISO:
+            fechaModificacionISO,
+
         url:
             urlLimpia,
 
         imagen:
-            noticia.imagen_url || ""
+            imagen
 
     });
 
@@ -212,7 +242,7 @@ async function mostrarNoticia(noticia) {
     let imagenHTML = "";
 
 
-    if (noticia.imagen_url) {
+    if (imagen) {
 
         imagenHTML = `
 
@@ -220,8 +250,9 @@ async function mostrarNoticia(noticia) {
 
                 <img
                     class="noticia-imagen"
+                    itemprop="image"
                     src="${escapeHTML(
-                        noticia.imagen_url
+                        imagen
                     )}"
                     alt="${escapeHTML(
                         titulo
@@ -271,6 +302,7 @@ async function mostrarNoticia(noticia) {
             itemtype="https://schema.org/NewsArticle"
         >
 
+            <!-- URL PRINCIPAL -->
 
             <meta
                 itemprop="mainEntityOfPage"
@@ -279,6 +311,8 @@ async function mostrarNoticia(noticia) {
                 )}"
             >
 
+
+            <!-- CATEGORÍA -->
 
             <div
                 class="noticia-categoria"
@@ -292,6 +326,8 @@ async function mostrarNoticia(noticia) {
             </div>
 
 
+            <!-- TÍTULO -->
+
             <h1
                 itemprop="headline"
             >
@@ -302,6 +338,8 @@ async function mostrarNoticia(noticia) {
 
             </h1>
 
+
+            <!-- BAJADA -->
 
             <p
                 class="noticia-bajada"
@@ -315,8 +353,9 @@ async function mostrarNoticia(noticia) {
             </p>
 
 
-            <div class="noticia-meta">
+            <!-- AUTOR -->
 
+            <div class="noticia-meta">
 
                 <span>
 
@@ -324,9 +363,22 @@ async function mostrarNoticia(noticia) {
 
                     <strong
                         itemprop="author"
+                        itemscope
+                        itemtype="https://schema.org/Organization"
                     >
 
-                        F360
+                        <span
+                            itemprop="name"
+                        >
+
+                            F360
+
+                        </span>
+
+                        <meta
+                            itemprop="url"
+                            content="https://futbol-360.vercel.app/"
+                        >
 
                     </strong>
 
@@ -341,6 +393,8 @@ async function mostrarNoticia(noticia) {
 
                 </span>
 
+
+                <!-- FECHA PUBLICACIÓN -->
 
                 <time
                     itemprop="datePublished"
@@ -374,11 +428,21 @@ async function mostrarNoticia(noticia) {
                 </span>
 
 
+                <!-- FECHA MODIFICACIÓN -->
+
+                <meta
+                    itemprop="dateModified"
+                    content="${escapeHTML(
+                        fechaModificacionISO
+                    )}"
+                >
+
             </div>
 
 
-            <div class="noticia-acciones">
+            <!-- ACCIONES -->
 
+            <div class="noticia-acciones">
 
                 <button
                     type="button"
@@ -405,12 +469,15 @@ async function mostrarNoticia(noticia) {
 
                 </button>
 
-
             </div>
 
 
+            <!-- IMAGEN -->
+
             ${imagenHTML}
 
+
+            <!-- CONTENIDO -->
 
             <div
                 class="noticia-contenido"
@@ -427,6 +494,8 @@ async function mostrarNoticia(noticia) {
         </article>
 
 
+        <!-- NOTICIAS RELACIONADAS -->
+
         <section
             class="noticias-relacionadas"
             id="noticias-relacionadas"
@@ -438,7 +507,7 @@ async function mostrarNoticia(noticia) {
 
 
     // ======================================
-    // SCHEMA
+    // SCHEMA NEWSARTICLE
     // ======================================
 
     crearSchemaNoticia({
@@ -450,10 +519,13 @@ async function mostrarNoticia(noticia) {
             descripcion,
 
         imagen:
-            noticia.imagen_url || "",
+            imagen,
 
         fechaPublicacion:
             fechaISO,
+
+        fechaModificacion:
+            fechaModificacionISO,
 
         categoria:
             categoria,
@@ -568,7 +640,7 @@ function actualizarSEO(datos) {
     actualizarMeta(
         "og-modified-time",
         "content",
-        datos.fechaISO
+        datos.fechaModificacionISO
     );
 
 
@@ -638,7 +710,9 @@ function actualizarMeta(
 ) {
 
     const elemento =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
 
     if (!elemento) {
@@ -675,7 +749,9 @@ function limitarDescripcion(texto) {
             .trim();
 
 
-    if (limpio.length <= 160) {
+    if (
+        limpio.length <= 160
+    ) {
 
         return limpio;
     }
@@ -694,7 +770,9 @@ function limitarDescripcion(texto) {
 // NOTICIAS RELACIONADAS
 // ==========================================
 
-async function cargarRelacionadas(noticia) {
+async function cargarRelacionadas(
+    noticia
+) {
 
     const contenedor =
         document.getElementById(
@@ -834,7 +912,9 @@ async function cargarRelacionadas(noticia) {
 // CREAR RELACIONADA
 // ==========================================
 
-function crearRelacionada(noticia) {
+function crearRelacionada(
+    noticia
+) {
 
     let imagenHTML = `
 
@@ -869,7 +949,6 @@ function crearRelacionada(noticia) {
 
         <article class="relacionada-card">
 
-
             <div class="relacionada-imagen">
 
                 ${imagenHTML}
@@ -878,7 +957,6 @@ function crearRelacionada(noticia) {
 
 
             <div class="relacionada-contenido">
-
 
                 <span
                     class="relacionada-categoria"
@@ -905,9 +983,7 @@ function crearRelacionada(noticia) {
 
                 </a>
 
-
             </div>
-
 
         </article>
 
@@ -919,7 +995,9 @@ function crearRelacionada(noticia) {
 // WHATSAPP
 // ==========================================
 
-function compartirWhatsApp(texto) {
+function compartirWhatsApp(
+    texto
+) {
 
     const url =
         `https://wa.me/?text=${texto}`;
@@ -1035,7 +1113,9 @@ function mostrarMensajeCopiado() {
 // SCHEMA NEWSARTICLE
 // ==========================================
 
-function crearSchemaNoticia(datos) {
+function crearSchemaNoticia(
+    datos
+) {
 
     const schemaAnterior =
         document.getElementById(
@@ -1067,7 +1147,7 @@ function crearSchemaNoticia(datos) {
             datos.fechaPublicacion,
 
         "dateModified":
-            datos.fechaPublicacion,
+            datos.fechaModificacion,
 
         "articleSection":
             datos.categoria,
@@ -1099,7 +1179,17 @@ function crearSchemaNoticia(datos) {
                 "F360",
 
             "url":
-                "https://futbol-360.vercel.app/"
+                "https://futbol-360.vercel.app/",
+
+            "logo": {
+
+                "@type":
+                    "ImageObject",
+
+                "url":
+                    "https://futbol-360.vercel.app/apple-touch-icon.png"
+
+            }
 
         },
 
@@ -1117,13 +1207,24 @@ function crearSchemaNoticia(datos) {
     };
 
 
+    // ======================================
+    // IMAGEN DE LA NOTICIA
+    // ======================================
+
     if (datos.imagen) {
 
         schema.image = [
+
             datos.imagen
+
         ];
+
     }
 
+
+    // ======================================
+    // SCRIPT JSON-LD
+    // ======================================
 
     const script =
         document.createElement(
@@ -1155,7 +1256,9 @@ function crearSchemaNoticia(datos) {
 // FORMATEAR CONTENIDO
 // ==========================================
 
-function formatearContenido(contenido) {
+function formatearContenido(
+    contenido
+) {
 
     if (!contenido) {
 
@@ -1205,7 +1308,9 @@ function formatearContenido(contenido) {
 // ESCAPAR HTML
 // ==========================================
 
-function escapeHTML(texto) {
+function escapeHTML(
+    texto
+) {
 
     if (
         texto === null ||
@@ -1249,7 +1354,9 @@ function escapeHTML(texto) {
 // ERROR
 // ==========================================
 
-function mostrarError(mensaje) {
+function mostrarError(
+    mensaje
+) {
 
     document.title =
         "F360 | Noticia no encontrada";
