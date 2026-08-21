@@ -5,7 +5,6 @@
 const SUPABASE_URL =
     "https://sxouqngithkiflbhdcii.supabase.co";
 
-
 const SUPABASE_KEY =
     "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
 
@@ -107,23 +106,7 @@ if (
     ]
 ) {
 
-    tituloCategoria.textContent =
-        "Categoría no encontrada";
-
-
-    descripcionCategoria.textContent =
-        "La sección que buscás no existe.";
-
-
-    noticiasContainer.innerHTML = `
-
-        <p class="error-noticias">
-
-            No encontramos esta categoría.
-
-        </p>
-
-    `;
+    mostrarErrorCategoria();
 
 } else {
 
@@ -145,7 +128,7 @@ async function cargarCategoria() {
 
 
     // ======================================
-    // INFORMACIÓN
+    // INFORMACIÓN VISIBLE
     // ======================================
 
     tituloCategoria.textContent =
@@ -156,8 +139,13 @@ async function cargarCategoria() {
         informacion.descripcion;
 
 
-    document.title =
-        `F360 | ${informacion.titulo}`;
+    // ======================================
+    // SEO
+    // ======================================
+
+    actualizarSEO(
+        informacion
+    );
 
 
     // ======================================
@@ -176,7 +164,7 @@ async function cargarCategoria() {
 
 
     // ======================================
-    // CONSULTA
+    // CONSULTA SUPABASE
     // ======================================
 
     const {
@@ -257,6 +245,8 @@ async function cargarCategoria() {
         `;
 
 
+        marcarMenuActivo();
+
         return;
 
     }
@@ -271,7 +261,7 @@ async function cargarCategoria() {
 
 
     // ======================================
-    // MARCAR MENU ACTIVO
+    // MARCAR MENÚ ACTIVO
     // ======================================
 
     marcarMenuActivo();
@@ -296,6 +286,311 @@ async function cargarCategoria() {
 
         }
     );
+
+}
+
+
+// ==========================================
+// SEO DINÁMICO
+// ==========================================
+
+function actualizarSEO(
+    informacion
+) {
+
+    const dominio =
+        "https://futbol-360.vercel.app";
+
+
+    const urlActual =
+        window.location.href;
+
+
+    const tituloSEO =
+        `F360 | ${informacion.titulo}`;
+
+
+    const descripcionSEO =
+        informacion.descripcion;
+
+
+    // ======================================
+    // TITLE
+    // ======================================
+
+    document.title =
+        tituloSEO;
+
+
+    // ======================================
+    // META DESCRIPTION
+    // ======================================
+
+    const metaDescription =
+        document.getElementById(
+            "meta-description"
+        );
+
+
+    if (metaDescription) {
+
+        metaDescription.setAttribute(
+            "content",
+            descripcionSEO
+        );
+
+    }
+
+
+    // ======================================
+    // CANONICAL
+    // ======================================
+
+    const canonical =
+        document.getElementById(
+            "canonical-url"
+        );
+
+
+    if (canonical) {
+
+        canonical.setAttribute(
+            "href",
+            urlActual
+        );
+
+    }
+
+
+    // ======================================
+    // OPEN GRAPH
+    // ======================================
+
+    const ogTitle =
+        document.getElementById(
+            "og-title"
+        );
+
+
+    const ogDescription =
+        document.getElementById(
+            "og-description"
+        );
+
+
+    const ogUrl =
+        document.getElementById(
+            "og-url"
+        );
+
+
+    if (ogTitle) {
+
+        ogTitle.setAttribute(
+            "content",
+            tituloSEO
+        );
+
+    }
+
+
+    if (ogDescription) {
+
+        ogDescription.setAttribute(
+            "content",
+            descripcionSEO
+        );
+
+    }
+
+
+    if (ogUrl) {
+
+        ogUrl.setAttribute(
+            "content",
+            urlActual
+        );
+
+    }
+
+
+    // ======================================
+    // TWITTER / X
+    // ======================================
+
+    const twitterTitle =
+        document.getElementById(
+            "twitter-title"
+        );
+
+
+    const twitterDescription =
+        document.getElementById(
+            "twitter-description"
+        );
+
+
+    if (twitterTitle) {
+
+        twitterTitle.setAttribute(
+            "content",
+            tituloSEO
+        );
+
+    }
+
+
+    if (twitterDescription) {
+
+        twitterDescription.setAttribute(
+            "content",
+            descripcionSEO
+        );
+
+    }
+
+
+    // ======================================
+    // DATOS ESTRUCTURADOS
+    // ======================================
+
+    agregarDatosEstructurados(
+        informacion,
+        dominio,
+        urlActual
+    );
+
+}
+
+
+// ==========================================
+// DATOS ESTRUCTURADOS
+// ==========================================
+
+function agregarDatosEstructurados(
+    informacion,
+    dominio,
+    urlActual
+) {
+
+    const schemaExistente =
+        document.getElementById(
+            "categoria-schema"
+        );
+
+
+    if (schemaExistente) {
+
+        schemaExistente.remove();
+
+    }
+
+
+    const datos =
+        {
+
+            "@context":
+                "https://schema.org",
+
+            "@type":
+                "CollectionPage",
+
+            "name":
+                `F360 | ${informacion.titulo}`,
+
+            "description":
+                informacion.descripcion,
+
+            "url":
+                urlActual,
+
+            "isPartOf":
+                {
+
+                    "@type":
+                        "WebSite",
+
+                    "name":
+                        "F360",
+
+                    "url":
+                        `${dominio}/`
+
+                }
+
+        };
+
+
+    const script =
+        document.createElement(
+            "script"
+        );
+
+
+    script.id =
+        "categoria-schema";
+
+
+    script.type =
+        "application/ld+json";
+
+
+    script.textContent =
+        JSON.stringify(
+            datos
+        );
+
+
+    document.head.appendChild(
+        script
+    );
+
+}
+
+
+// ==========================================
+// MOSTRAR ERROR DE CATEGORÍA
+// ==========================================
+
+function mostrarErrorCategoria() {
+
+    tituloCategoria.textContent =
+        "Categoría no encontrada";
+
+
+    descripcionCategoria.textContent =
+        "La sección que buscás no existe.";
+
+
+    document.title =
+        "F360 | Categoría no encontrada";
+
+
+    const metaDescription =
+        document.getElementById(
+            "meta-description"
+        );
+
+
+    if (metaDescription) {
+
+        metaDescription.setAttribute(
+            "content",
+            "La categoría que buscás no existe en F360."
+        );
+
+    }
+
+
+    noticiasContainer.innerHTML = `
+
+        <p class="error-noticias">
+
+            No encontramos esta categoría.
+
+        </p>
+
+    `;
 
 }
 
@@ -438,6 +733,9 @@ function crearTarjeta(
                         noticia.id
                     )}"
                     class="leer-nota"
+                    aria-label="Leer noticia: ${escapeHTML(
+                        noticia.titulo
+                    )}"
                 >
 
                     LEER NOTA →
@@ -459,7 +757,7 @@ function crearTarjeta(
 
 
 // ==========================================
-// MARCAR MENU ACTIVO
+// MARCAR MENÚ ACTIVO
 // ==========================================
 
 function marcarMenuActivo() {
@@ -481,6 +779,10 @@ function marcarMenuActivo() {
             "menu-mercado"
         );
 
+
+    // ======================================
+    // LIMPIAR ACTIVOS
+    // ======================================
 
     if (
         menuArgentino
@@ -514,6 +816,10 @@ function marcarMenuActivo() {
 
     }
 
+
+    // ======================================
+    // ACTIVAR CATEGORÍA
+    // ======================================
 
     if (
         categoria ===
