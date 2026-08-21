@@ -1,16 +1,24 @@
 // ==========================================
+// F360 - PANEL DE PERIODISTA
+// ==========================================
+
+
+// ==========================================
 // CONFIGURACIÓN SUPABASE
 // ==========================================
 
-const SUPABASE_URL = "https://sxouqngithkiflbhdcii.supabase.co";
+const SUPABASE_URL =
+    "https://sxouqngithkiflbhdcii.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
+const SUPABASE_KEY =
+    "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
 
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 // ==========================================
@@ -18,98 +26,212 @@ const supabaseClient = window.supabase.createClient(
 // ==========================================
 
 const loginSection =
-    document.getElementById("login-section");
+    document.getElementById(
+        "login-section"
+    );
+
 
 const panelSection =
-    document.getElementById("panel-section");
+    document.getElementById(
+        "panel-section"
+    );
+
 
 const loginForm =
-    document.getElementById("login-form");
+    document.getElementById(
+        "login-form"
+    );
+
 
 const loginMessage =
-    document.getElementById("login-message");
+    document.getElementById(
+        "login-message"
+    );
+
 
 const notaForm =
-    document.getElementById("nota-form");
+    document.getElementById(
+        "nota-form"
+    );
+
 
 const notaMessage =
-    document.getElementById("nota-message");
+    document.getElementById(
+        "nota-message"
+    );
+
 
 const logoutButton =
-    document.getElementById("logout-button");
+    document.getElementById(
+        "logout-button"
+    );
+
 
 const usuarioEmail =
-    document.getElementById("usuario-email");
+    document.getElementById(
+        "usuario-email"
+    );
+
 
 const imagenInput =
-    document.getElementById("imagen");
+    document.getElementById(
+        "imagen"
+    );
+
 
 const previewContainer =
-    document.getElementById("preview-container");
+    document.getElementById(
+        "preview-container"
+    );
+
 
 const previewImagen =
-    document.getElementById("preview-imagen");
+    document.getElementById(
+        "preview-imagen"
+    );
+
+
+const publicarButton =
+    document.getElementById(
+        "publicar-button"
+    );
+
+
+// ==========================================
+// CONSTANTES DE VALIDACIÓN
+// ==========================================
+
+const MIN_TITULO =
+    20;
+
+
+const MIN_BAJADA =
+    50;
+
+
+const MIN_CONTENIDO =
+    300;
+
+
+const MAX_IMAGEN_MB =
+    5;
+
+
+const TIPOS_IMAGEN_PERMITIDOS = [
+
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+
+];
 
 
 // ==========================================
 // VISTA PREVIA DE IMAGEN
 // ==========================================
 
-imagenInput.addEventListener("change", function () {
+imagenInput.addEventListener(
+    "change",
+    function () {
 
-    const archivo = imagenInput.files[0];
+        const archivo =
+            imagenInput.files[0];
 
-    if (!archivo) {
 
-        previewContainer.classList.add("hidden");
+        if (!archivo) {
 
-        return;
+            previewContainer
+                .classList
+                .add("hidden");
+
+            previewImagen.src = "";
+
+            return;
+        }
+
+
+        // ------------------------------
+        // TIPO
+        // ------------------------------
+
+        if (
+            !TIPOS_IMAGEN_PERMITIDOS
+                .includes(
+                    archivo.type
+                )
+        ) {
+
+            alert(
+                "Solo se permiten imágenes JPG, PNG o WEBP."
+            );
+
+
+            imagenInput.value = "";
+
+
+            previewContainer
+                .classList
+                .add("hidden");
+
+
+            previewImagen.src = "";
+
+
+            return;
+        }
+
+
+        // ------------------------------
+        // TAMAÑO
+        // ------------------------------
+
+        if (
+            archivo.size >
+            MAX_IMAGEN_MB *
+            1024 *
+            1024
+        ) {
+
+            alert(
+                "La imagen no puede superar los 5 MB."
+            );
+
+
+            imagenInput.value = "";
+
+
+            previewContainer
+                .classList
+                .add("hidden");
+
+
+            previewImagen.src = "";
+
+
+            return;
+        }
+
+
+        // ------------------------------
+        // PREVISUALIZACIÓN
+        // ------------------------------
+
+        const url =
+            URL.createObjectURL(
+                archivo
+            );
+
+
+        previewImagen.src =
+            url;
+
+
+        previewContainer
+            .classList
+            .remove("hidden");
+
     }
-
-
-    const tiposPermitidos = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-    ];
-
-
-    if (!tiposPermitidos.includes(archivo.type)) {
-
-        alert(
-            "Solo se permiten imágenes JPG, PNG o WEBP."
-        );
-
-        imagenInput.value = "";
-
-        previewContainer.classList.add("hidden");
-
-        return;
-    }
-
-
-    if (archivo.size > 5 * 1024 * 1024) {
-
-        alert(
-            "La imagen no puede superar los 5 MB."
-        );
-
-        imagenInput.value = "";
-
-        previewContainer.classList.add("hidden");
-
-        return;
-    }
-
-
-    const url =
-        URL.createObjectURL(archivo);
-
-    previewImagen.src = url;
-
-    previewContainer.classList.remove("hidden");
-
-});
+);
 
 
 // ==========================================
@@ -122,12 +244,16 @@ async function comprobarSesion() {
         data: {
             session
         }
-    } = await supabaseClient.auth.getSession();
+    } =
+        await supabaseClient.auth
+            .getSession();
 
 
     if (session) {
 
-        mostrarPanel(session.user);
+        mostrarPanel(
+            session.user
+        );
 
     } else {
 
@@ -143,9 +269,14 @@ async function comprobarSesion() {
 
 function mostrarLogin() {
 
-    loginSection.classList.remove("hidden");
+    loginSection
+        .classList
+        .remove("hidden");
 
-    panelSection.classList.add("hidden");
+
+    panelSection
+        .classList
+        .add("hidden");
 
 }
 
@@ -154,11 +285,19 @@ function mostrarLogin() {
 // MOSTRAR PANEL
 // ==========================================
 
-function mostrarPanel(user) {
+function mostrarPanel(
+    user
+) {
 
-    loginSection.classList.add("hidden");
+    loginSection
+        .classList
+        .add("hidden");
 
-    panelSection.classList.remove("hidden");
+
+    panelSection
+        .classList
+        .remove("hidden");
+
 
     usuarioEmail.textContent =
         user.email;
@@ -178,12 +317,19 @@ loginForm.addEventListener(
 
 
         const email =
-            document.getElementById("email")
+            document
+                .getElementById(
+                    "email"
+                )
                 .value
                 .trim();
 
+
         const password =
-            document.getElementById("password")
+            document
+                .getElementById(
+                    "password"
+                )
                 .value;
 
 
@@ -195,31 +341,42 @@ loginForm.addEventListener(
             data,
             error
         } =
-            await supabaseClient.auth
+            await supabaseClient
+                .auth
                 .signInWithPassword({
 
-                    email: email,
+                    email:
+                        email,
 
-                    password: password
+                    password:
+                        password
 
                 });
 
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                error
+            );
+
 
             loginMessage.textContent =
                 "No se pudo iniciar sesión: " +
                 error.message;
 
+
             return;
         }
 
 
-        loginMessage.textContent = "";
+        loginMessage.textContent =
+            "";
 
-        mostrarPanel(data.user);
+
+        mostrarPanel(
+            data.user
+        );
 
     }
 );
@@ -233,7 +390,10 @@ logoutButton.addEventListener(
     "click",
     async function () {
 
-        await supabaseClient.auth.signOut();
+        await supabaseClient
+            .auth
+            .signOut();
+
 
         mostrarLogin();
 
@@ -250,6 +410,18 @@ notaForm.addEventListener(
     async function (event) {
 
         event.preventDefault();
+
+
+        // ------------------------------
+        // DESACTIVAR BOTÓN
+        // ------------------------------
+
+        publicarButton.disabled =
+            true;
+
+
+        notaMessage.textContent =
+            "Comprobando información...";
 
 
         // ------------------------------
@@ -270,60 +442,238 @@ notaForm.addEventListener(
             notaMessage.textContent =
                 "Tenés que iniciar sesión.";
 
+
+            publicarButton.disabled =
+                false;
+
+
             return;
         }
 
 
         // ------------------------------
-        // DATOS DE LA NOTA
+        // DATOS
         // ------------------------------
 
         const titulo =
-            document.getElementById("titulo")
+            document
+                .getElementById(
+                    "titulo"
+                )
                 .value
                 .trim();
+
 
         const bajada =
-            document.getElementById("bajada")
+            document
+                .getElementById(
+                    "bajada"
+                )
                 .value
                 .trim();
+
 
         const categoria =
-            document.getElementById("categoria")
-                .value;
-
-        const contenido =
-            document.getElementById("contenido")
+            document
+                .getElementById(
+                    "categoria"
+                )
                 .value
                 .trim();
 
+
+        const contenido =
+            document
+                .getElementById(
+                    "contenido"
+                )
+                .value
+                .trim();
+
+
         const imagenArchivo =
-            document.getElementById("imagen")
+            document
+                .getElementById(
+                    "imagen"
+                )
                 .files[0];
 
 
         // ------------------------------
-        // VALIDACIONES
+        // VALIDAR TÍTULO
         // ------------------------------
 
+        if (!titulo) {
+
+            notaMessage.textContent =
+                "Escribí un título para la noticia.";
+
+
+            publicarButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
         if (
-            !titulo ||
-            !categoria ||
-            !contenido
+            titulo.length <
+            MIN_TITULO
         ) {
 
             notaMessage.textContent =
-                "Completá el título, categoría y contenido.";
+                `El título debe tener al menos ${MIN_TITULO} caracteres.`;
+
+
+            publicarButton.disabled =
+                false;
+
 
             return;
         }
 
 
         // ------------------------------
-        // VARIABLE PARA LA URL
+        // VALIDAR BAJADA
         // ------------------------------
 
-        let imagenUrl = null;
+        if (!bajada) {
+
+            notaMessage.textContent =
+                "Escribí una bajada para la noticia.";
+
+
+            publicarButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        if (
+            bajada.length <
+            MIN_BAJADA
+        ) {
+
+            notaMessage.textContent =
+                `La bajada debe tener al menos ${MIN_BAJADA} caracteres.`;
+
+
+            publicarButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        // ------------------------------
+        // VALIDAR CATEGORÍA
+        // ------------------------------
+
+        if (!categoria) {
+
+            notaMessage.textContent =
+                "Seleccioná una categoría.";
+
+
+            publicarButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        // ------------------------------
+        // VALIDAR CONTENIDO
+        // ------------------------------
+
+        if (!contenido) {
+
+            notaMessage.textContent =
+                "Escribí el contenido de la noticia.";
+
+
+            publicarButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        if (
+            contenido.length <
+            MIN_CONTENIDO
+        ) {
+
+            notaMessage.textContent =
+                `El contenido debe tener al menos ${MIN_CONTENIDO} caracteres.`;
+
+
+            publicarButton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        // ------------------------------
+        // VALIDAR IMAGEN
+        // ------------------------------
+
+        if (imagenArchivo) {
+
+            if (
+                !TIPOS_IMAGEN_PERMITIDOS
+                    .includes(
+                        imagenArchivo.type
+                    )
+            ) {
+
+                notaMessage.textContent =
+                    "La imagen debe ser JPG, PNG o WEBP.";
+
+
+                publicarButton.disabled =
+                    false;
+
+
+                return;
+            }
+
+
+            if (
+                imagenArchivo.size >
+                MAX_IMAGEN_MB *
+                1024 *
+                1024
+            ) {
+
+                notaMessage.textContent =
+                    "La imagen no puede superar los 5 MB.";
+
+
+                publicarButton.disabled =
+                    false;
+
+
+                return;
+            }
+
+        }
+
+
+        // ------------------------------
+        // VARIABLE IMAGEN
+        // ------------------------------
+
+        let imagenUrl =
+            null;
 
 
         // ------------------------------
@@ -350,16 +700,22 @@ notaForm.addEventListener(
             const {
                 error: uploadError
             } =
-                await supabaseClient.storage
-                    .from("imagenes-noticias")
+                await supabaseClient
+                    .storage
+                    .from(
+                        "imagenes-noticias"
+                    )
                     .upload(
                         nombreArchivo,
                         imagenArchivo,
                         {
+
                             contentType:
                                 imagenArchivo.type,
 
-                            upsert: false
+                            upsert:
+                                false
+
                         }
                     );
 
@@ -371,23 +727,33 @@ notaForm.addEventListener(
                     uploadError
                 );
 
+
                 notaMessage.textContent =
                     "No se pudo subir la imagen: " +
                     uploadError.message;
+
+
+                publicarButton.disabled =
+                    false;
+
 
                 return;
             }
 
 
             // ------------------------------
-            // OBTENER URL PÚBLICA
+            // URL PÚBLICA
             // ------------------------------
 
             const {
-                data: publicUrlData
+                data:
+                    publicUrlData
             } =
-                supabaseClient.storage
-                    .from("imagenes-noticias")
+                supabaseClient
+                    .storage
+                    .from(
+                        "imagenes-noticias"
+                    )
                     .getPublicUrl(
                         nombreArchivo
                     );
@@ -411,24 +777,34 @@ notaForm.addEventListener(
             error
         } =
             await supabaseClient
-                .from("noticias")
+                .from(
+                    "noticias"
+                )
                 .insert({
 
-                    titulo: titulo,
+                    titulo:
+                        titulo,
 
-                    bajada: bajada,
+                    bajada:
+                        bajada,
 
-                    contenido: contenido,
+                    contenido:
+                        contenido,
 
-                    categoria: categoria,
+                    categoria:
+                        categoria,
 
-                    imagen_url: imagenUrl,
+                    imagen_url:
+                        imagenUrl,
 
-                    autor: "F360",
+                    autor:
+                        "F360",
 
-                    autor_id: user.id,
+                    autor_id:
+                        user.id,
 
-                    publicada: true
+                    publicada:
+                        true
 
                 });
 
@@ -444,9 +820,15 @@ notaForm.addEventListener(
                 error
             );
 
+
             notaMessage.textContent =
                 "No se pudo publicar la nota: " +
                 error.message;
+
+
+            publicarButton.disabled =
+                false;
+
 
             return;
         }
@@ -468,7 +850,12 @@ notaForm.addEventListener(
             .add("hidden");
 
 
-        previewImagen.src = "";
+        previewImagen.src =
+            "";
+
+
+        publicarButton.disabled =
+            false;
 
     }
 );
