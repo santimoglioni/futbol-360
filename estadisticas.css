@@ -1,0 +1,745 @@
+/* ==========================================
+   GENERAL
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background: #f4f4f4;
+    color: #111;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+button,
+input {
+    font-family: inherit;
+}
+
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo {
+    font-size: 52px;
+
+    font-weight: 900;
+    font-style: italic;
+
+    letter-spacing: -5px;
+
+    line-height: 1;
+}
+
+
+.logo span {
+    color: #168cff;
+}
+
+
+/* ==========================================
+   CARGANDO
+========================================== */
+
+.cargando {
+    padding: 80px 20px;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+.login {
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+}
+
+
+.login-box {
+    width: 100%;
+    max-width: 430px;
+
+    background: #fff;
+
+    padding: 45px;
+
+    border:
+        1px solid #ddd;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, .08);
+}
+
+
+.login-box .logo {
+    margin-bottom: 30px;
+}
+
+
+.login-box h1 {
+    font-family: Georgia, serif;
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+}
+
+
+.login-box > p {
+    color: #666;
+
+    margin-bottom: 30px;
+}
+
+
+.login-box label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+.login-box input {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+
+    border:
+        1px solid #ccc;
+
+    outline: none;
+}
+
+
+.login-box input:focus {
+    border-color: #168cff;
+}
+
+
+.login-box button {
+    width: 100%;
+
+    padding: 15px;
+
+    border: 0;
+
+    background: #168cff;
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+.login-box button:hover {
+    background: #0875d1;
+}
+
+
+#login-message {
+    margin-top: 15px;
+
+    color: #c00;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+.dashboard {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding-bottom: 70px;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.dashboard-header {
+    min-height: 120px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+.dashboard-header > div:first-child p {
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+
+.usuario {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.usuario span {
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+.usuario button {
+    border:
+        1px solid #ccc;
+
+    background: white;
+
+    padding: 10px 14px;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+.usuario button:hover {
+    border-color: #168cff;
+
+    color: #168cff;
+}
+
+
+/* ==========================================
+   RESUMEN
+========================================== */
+
+.resumen {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+.estadistica {
+    background: white;
+
+    border:
+        1px solid #ddd;
+
+    padding: 28px;
+}
+
+
+.estadistica span {
+    display: block;
+
+    color: #777;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: .5px;
+
+    margin-bottom: 15px;
+}
+
+
+.estadistica strong {
+    display: block;
+
+    font-family: Georgia, serif;
+
+    font-size: 45px;
+
+    line-height: 1;
+}
+
+
+/* ==========================================
+   BLOQUES
+========================================== */
+
+.bloque {
+    background: white;
+
+    border:
+        1px solid #ddd;
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+}
+
+
+.bloque-titulo {
+    border-bottom:
+        1px solid #ddd;
+
+    padding-bottom: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+.bloque-titulo span {
+    color: #168cff;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+
+.bloque-titulo h2 {
+    font-family: Georgia, serif;
+
+    font-size: 29px;
+
+    margin-top: 7px;
+}
+
+
+/* ==========================================
+   GRÁFICO
+========================================== */
+
+.grafico {
+    height: 280px;
+
+    display: flex;
+
+    align-items: stretch;
+    justify-content: space-around;
+
+    gap: 12px;
+
+    padding:
+        20px
+        10px
+        0;
+
+    border-bottom:
+        1px solid #ddd;
+}
+
+
+.barra-contenedor {
+    flex: 1;
+
+    max-width: 100px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    flex-direction: column;
+}
+
+
+.barra {
+    width: 55px;
+
+    min-height: 5px;
+
+    background: #168cff;
+
+    transition:
+        height .4s ease;
+}
+
+
+.barra-valor {
+    min-height: 20px;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+.barra-fecha {
+    margin-top: 10px;
+
+    color: #777;
+
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   RANKING
+========================================== */
+
+.ranking-estadisticas {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.ranking-item {
+    display: grid;
+
+    grid-template-columns:
+        60px
+        minmax(0, 1fr)
+        100px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 20px 0;
+
+    border-bottom:
+        1px solid #ddd;
+}
+
+
+.ranking-item:last-child {
+    border-bottom: 0;
+}
+
+
+.ranking-numero {
+    color: #168cff;
+
+    font-size: 24px;
+    font-weight: 900;
+}
+
+
+.ranking-info {
+    min-width: 0;
+}
+
+
+.ranking-info span {
+    display: block;
+
+    color: #168cff;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    margin-bottom: 5px;
+}
+
+
+.ranking-info h3 {
+    font-family: Georgia, serif;
+
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+
+.ranking-visitas {
+    text-align: right;
+
+    font-family: Georgia, serif;
+
+    font-size: 26px;
+}
+
+
+.ranking-visitas small {
+    display: block;
+
+    color: #777;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 10px;
+    font-weight: normal;
+}
+
+
+.sin-datos {
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+/* ==========================================
+   VOLVER
+========================================== */
+
+.volver {
+    margin-top: 20px;
+}
+
+
+.volver a {
+    color: #168cff;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    text-decoration: none;
+}
+
+
+.volver a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================
+   NO AUTORIZADO
+========================================== */
+
+.no-autorizado {
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 25px;
+}
+
+
+.no-autorizado > div {
+    max-width: 500px;
+}
+
+
+.no-autorizado .logo {
+    margin-bottom: 25px;
+}
+
+
+.no-autorizado h1 {
+    font-family: Georgia, serif;
+
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
+
+.no-autorizado p {
+    color: #666;
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+
+.no-autorizado a {
+    display: inline-block;
+
+    background: #168cff;
+
+    color: white;
+
+    padding: 13px 20px;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    text-decoration: none;
+}
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+.error {
+    background: #fff;
+
+    border:
+        1px solid #ddd;
+
+    padding: 50px;
+
+    text-align: center;
+
+    color: #c00;
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 750px) {
+
+    .resumen {
+        grid-template-columns: 1fr;
+    }
+
+
+    .dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding:
+            25px
+            0;
+    }
+
+
+    .usuario {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            45px
+            minmax(0, 1fr)
+            80px;
+    }
+
+}
+
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 550px) {
+
+    .dashboard {
+        width: 94%;
+    }
+
+
+    .logo {
+        font-size: 45px;
+    }
+
+
+    .login-box {
+        padding: 30px 22px;
+    }
+
+
+    .estadistica {
+        padding: 22px;
+    }
+
+
+    .estadistica strong {
+        font-size: 38px;
+    }
+
+
+    .bloque {
+        padding: 20px;
+    }
+
+
+    .bloque-titulo h2 {
+        font-size: 25px;
+    }
+
+
+    .grafico {
+        height: 230px;
+
+        gap: 5px;
+    }
+
+
+    .barra {
+        width: 32px;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            35px
+            minmax(0, 1fr);
+
+        gap: 12px;
+    }
+
+
+    .ranking-visitas {
+        grid-column: 2;
+
+        text-align: left;
+
+        font-size: 20px;
+    }
+
+
+    .usuario {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}
