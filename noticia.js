@@ -1,4 +1,9 @@
 // ==========================================
+// F360 - NOTICIAS
+// ==========================================
+
+
+// ==========================================
 // CONEXIÓN CON SUPABASE
 // ==========================================
 
@@ -7,7 +12,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -27,7 +31,7 @@ const noticiaContainer =
 
 
 // ==========================================
-// OBTENER ID
+// OBTENER ID DE LA NOTICIA
 // ==========================================
 
 const parametros =
@@ -35,22 +39,19 @@ const parametros =
         window.location.search
     );
 
-
 const noticiaId =
-    parametros.get(
-        "id"
-    );
+    parametros.get("id");
 
 
 // ==========================================
-// CARGAR NOTICIA
+// INICIAR
 // ==========================================
 
 cargarNoticia();
 
 
 // ==========================================
-// FUNCIÓN PRINCIPAL
+// CARGAR NOTICIA
 // ==========================================
 
 async function cargarNoticia() {
@@ -62,7 +63,6 @@ async function cargarNoticia() {
         );
 
         return;
-
     }
 
 
@@ -71,21 +71,10 @@ async function cargarNoticia() {
         error
     } =
         await supabaseClient
-
             .from("noticias")
-
             .select("*")
-
-            .eq(
-                "id",
-                noticiaId
-            )
-
-            .eq(
-                "publicada",
-                true
-            )
-
+            .eq("id", noticiaId)
+            .eq("publicada", true)
             .single();
 
 
@@ -96,20 +85,25 @@ async function cargarNoticia() {
             error
         );
 
-
         mostrarError(
             "No pudimos encontrar esta noticia."
         );
 
         return;
-
     }
 
 
-    mostrarNoticia(
-        data
-    );
+    if (!data) {
 
+        mostrarError(
+            "La noticia no existe."
+        );
+
+        return;
+    }
+
+
+    mostrarNoticia(data);
 }
 
 
@@ -117,9 +111,7 @@ async function cargarNoticia() {
 // MOSTRAR NOTICIA
 // ==========================================
 
-async function mostrarNoticia(
-    noticia
-) {
+async function mostrarNoticia(noticia) {
 
     const titulo =
         noticia.titulo ||
@@ -138,9 +130,7 @@ async function mostrarNoticia(
 
     const fecha =
         noticia.created_at
-            ? new Date(
-                noticia.created_at
-            )
+            ? new Date(noticia.created_at)
             : new Date();
 
 
@@ -169,179 +159,60 @@ async function mostrarNoticia(
         );
 
 
-    const urlActual =
-        window.location.href;
+    // ======================================
+    // URL LIMPIA
+    // ======================================
+
+    const urlLimpia =
+        crearURLLimpia(noticia.id);
 
 
     // ======================================
-    // SEO PRINCIPAL
+    // TÍTULO SEO
     // ======================================
 
     const tituloSEO =
         `${titulo} | F360`;
 
 
-    document.title =
-        tituloSEO;
-
-
     // ======================================
-    // META DESCRIPTION
+    // SEO
     // ======================================
 
-    const metaDescription =
-        document.getElementById(
-            "meta-description"
-        );
+    actualizarSEO({
 
+        titulo:
+            titulo,
 
-    if (metaDescription) {
+        tituloSEO:
+            tituloSEO,
 
-        metaDescription.setAttribute(
-            "content",
-            limitarDescripcion(
-                descripcion
-            )
-        );
+        descripcion:
+            descripcion,
 
-    }
+        categoria:
+            categoria,
 
+        fechaISO:
+            fechaISO,
 
-    // ======================================
-    // CANONICAL
-    // ======================================
+        url:
+            urlLimpia,
 
-    const canonical =
-        document.getElementById(
-            "canonical-url"
-        );
+        imagen:
+            noticia.imagen_url || ""
 
-
-    if (canonical) {
-
-        canonical.setAttribute(
-            "href",
-            urlActual
-        );
-
-    }
-
-
-    // ======================================
-    // OPEN GRAPH
-    // ======================================
-
-    actualizarMeta(
-        "og-title",
-        "content",
-        tituloSEO
-    );
-
-
-    actualizarMeta(
-        "og-description",
-        "content",
-        descripcion
-    );
-
-
-    actualizarMeta(
-        "og-url",
-        "content",
-        urlActual
-    );
-
-
-    actualizarMeta(
-        "og-section",
-        "content",
-        categoria
-    );
-
-
-    actualizarMeta(
-        "og-published-time",
-        "content",
-        fechaISO
-    );
-
-
-    actualizarMeta(
-        "og-modified-time",
-        "content",
-        fechaISO
-    );
-
-
-    if (
-        noticia.imagen_url
-    ) {
-
-        actualizarMeta(
-            "og-image",
-            "content",
-            noticia.imagen_url
-        );
-
-
-        actualizarMeta(
-            "og-image-alt",
-            "content",
-            titulo
-        );
-
-    }
-
-
-    // ======================================
-    // TWITTER / X
-    // ======================================
-
-    actualizarMeta(
-        "twitter-title",
-        "content",
-        tituloSEO
-    );
-
-
-    actualizarMeta(
-        "twitter-description",
-        "content",
-        descripcion
-    );
-
-
-    if (
-        noticia.imagen_url
-    ) {
-
-        actualizarMeta(
-            "twitter-image",
-            "content",
-            noticia.imagen_url
-        );
-
-
-        actualizarMeta(
-            "twitter-image-alt",
-            "content",
-            titulo
-        );
-
-    }
+    });
 
 
     // ======================================
     // IMAGEN
     // ======================================
 
-    let imagenHTML =
-        "";
+    let imagenHTML = "";
 
 
-    if (
-        noticia.imagen_url
-    ) {
+    if (noticia.imagen_url) {
 
         imagenHTML = `
 
@@ -361,7 +232,6 @@ async function mostrarNoticia(
             </div>
 
         `;
-
     }
 
 
@@ -371,7 +241,7 @@ async function mostrarNoticia(
 
     const textoWhatsApp =
         encodeURIComponent(
-            `${titulo} - F360 ${urlActual}`
+            `${titulo} - F360 ${urlLimpia}`
         );
 
 
@@ -405,7 +275,7 @@ async function mostrarNoticia(
             <meta
                 itemprop="mainEntityOfPage"
                 content="${escapeHTML(
-                    urlActual
+                    urlLimpia
                 )}"
             >
 
@@ -479,7 +349,9 @@ async function mostrarNoticia(
                     )}"
                 >
 
-                    ${fechaVisible}
+                    ${escapeHTML(
+                        fechaVisible
+                    )}
 
                 </time>
 
@@ -495,7 +367,9 @@ async function mostrarNoticia(
 
                 <span>
 
-                    ${horaVisible}
+                    ${escapeHTML(
+                        horaVisible
+                    )}
 
                 </span>
 
@@ -564,7 +438,7 @@ async function mostrarNoticia(
 
 
     // ======================================
-    // SCHEMA NEWSARTICLE
+    // SCHEMA
     // ======================================
 
     crearSchemaNoticia({
@@ -576,8 +450,7 @@ async function mostrarNoticia(
             descripcion,
 
         imagen:
-            noticia.imagen_url ||
-            "",
+            noticia.imagen_url || "",
 
         fechaPublicacion:
             fechaISO,
@@ -586,19 +459,171 @@ async function mostrarNoticia(
             categoria,
 
         url:
-            urlActual
+            urlLimpia
 
     });
 
 
     // ======================================
-    // NOTICIAS RELACIONADAS
+    // RELACIONADAS
     // ======================================
 
     await cargarRelacionadas(
         noticia
     );
+}
 
+
+// ==========================================
+// CREAR URL LIMPIA
+// ==========================================
+
+function crearURLLimpia(id) {
+
+    return (
+        `${window.location.origin}` +
+        `${window.location.pathname}` +
+        `?id=${encodeURIComponent(id)}`
+    );
+}
+
+
+// ==========================================
+// ACTUALIZAR SEO
+// ==========================================
+
+function actualizarSEO(datos) {
+
+    // ======================================
+    // TITLE
+    // ======================================
+
+    document.title =
+        datos.tituloSEO;
+
+
+    // ======================================
+    // DESCRIPTION
+    // ======================================
+
+    actualizarMeta(
+        "meta-description",
+        "content",
+        limitarDescripcion(
+            datos.descripcion
+        )
+    );
+
+
+    // ======================================
+    // CANONICAL
+    // ======================================
+
+    actualizarMeta(
+        "canonical-url",
+        "href",
+        datos.url
+    );
+
+
+    // ======================================
+    // OPEN GRAPH
+    // ======================================
+
+    actualizarMeta(
+        "og-title",
+        "content",
+        datos.tituloSEO
+    );
+
+
+    actualizarMeta(
+        "og-description",
+        "content",
+        datos.descripcion
+    );
+
+
+    actualizarMeta(
+        "og-url",
+        "content",
+        datos.url
+    );
+
+
+    actualizarMeta(
+        "og-section",
+        "content",
+        datos.categoria
+    );
+
+
+    actualizarMeta(
+        "og-published-time",
+        "content",
+        datos.fechaISO
+    );
+
+
+    actualizarMeta(
+        "og-modified-time",
+        "content",
+        datos.fechaISO
+    );
+
+
+    if (datos.imagen) {
+
+        actualizarMeta(
+            "og-image",
+            "content",
+            datos.imagen
+        );
+
+
+        actualizarMeta(
+            "og-image-alt",
+            "content",
+            datos.titulo
+        );
+
+    }
+
+
+    // ======================================
+    // TWITTER / X
+    // ======================================
+
+    actualizarMeta(
+        "twitter-title",
+        "content",
+        datos.tituloSEO
+    );
+
+
+    actualizarMeta(
+        "twitter-description",
+        "content",
+        datos.descripcion
+    );
+
+
+    if (datos.imagen) {
+
+        actualizarMeta(
+            "twitter-image",
+            "content",
+            datos.imagen
+        );
+
+
+        actualizarMeta(
+            "twitter-image-alt",
+            "content",
+            datos.titulo
+        );
+
+    }
 }
 
 
@@ -613,15 +638,12 @@ function actualizarMeta(
 ) {
 
     const elemento =
-        document.getElementById(
-            id
-        );
+        document.getElementById(id);
 
 
     if (!elemento) {
 
         return;
-
     }
 
 
@@ -629,22 +651,18 @@ function actualizarMeta(
         atributo,
         valor
     );
-
 }
 
 
 // ==========================================
-// LIMITAR DESCRIPCIÓN
+// LIMITAR DESCRIPTION
 // ==========================================
 
-function limitarDescripcion(
-    texto
-) {
+function limitarDescripcion(texto) {
 
     if (!texto) {
 
         return "";
-
     }
 
 
@@ -657,21 +675,18 @@ function limitarDescripcion(
             .trim();
 
 
-    if (
-        limpio.length <= 160
-    ) {
+    if (limpio.length <= 160) {
 
         return limpio;
-
     }
 
 
-    return
+    return (
         limpio.substring(
             0,
             157
-        ) + "...";
-
+        ) + "..."
+    );
 }
 
 
@@ -679,9 +694,7 @@ function limitarDescripcion(
 // NOTICIAS RELACIONADAS
 // ==========================================
 
-async function cargarRelacionadas(
-    noticia
-) {
+async function cargarRelacionadas(noticia) {
 
     const contenedor =
         document.getElementById(
@@ -692,22 +705,17 @@ async function cargarRelacionadas(
     if (!contenedor) {
 
         return;
-
     }
 
 
     let consulta;
 
 
-    if (
-        noticia.categoria
-    ) {
+    if (noticia.categoria) {
 
         consulta =
             supabaseClient
-
                 .from("noticias")
-
                 .select(`
                     id,
                     titulo,
@@ -715,40 +723,31 @@ async function cargarRelacionadas(
                     imagen_url,
                     created_at
                 `)
-
                 .eq(
                     "publicada",
                     true
                 )
-
                 .eq(
                     "categoria",
                     noticia.categoria
                 )
-
                 .neq(
                     "id",
                     noticia.id
                 )
-
                 .order(
                     "created_at",
                     {
                         ascending: false
                     }
                 )
-
-                .limit(
-                    3
-                );
+                .limit(3);
 
     } else {
 
         consulta =
             supabaseClient
-
                 .from("noticias")
-
                 .select(`
                     id,
                     titulo,
@@ -756,28 +755,21 @@ async function cargarRelacionadas(
                     imagen_url,
                     created_at
                 `)
-
                 .eq(
                     "publicada",
                     true
                 )
-
                 .neq(
                     "id",
                     noticia.id
                 )
-
                 .order(
                     "created_at",
                     {
                         ascending: false
                     }
                 )
-
-                .limit(
-                    3
-                );
-
+                .limit(3);
     }
 
 
@@ -796,7 +788,6 @@ async function cargarRelacionadas(
         );
 
         return;
-
     }
 
 
@@ -809,7 +800,6 @@ async function cargarRelacionadas(
             "";
 
         return;
-
     }
 
 
@@ -837,17 +827,14 @@ async function cargarRelacionadas(
         </div>
 
     `;
-
 }
 
 
 // ==========================================
-// CREAR NOTICIA RELACIONADA
+// CREAR RELACIONADA
 // ==========================================
 
-function crearRelacionada(
-    noticia
-) {
+function crearRelacionada(noticia) {
 
     let imagenHTML = `
 
@@ -860,9 +847,7 @@ function crearRelacionada(
     `;
 
 
-    if (
-        noticia.imagen_url
-    ) {
+    if (noticia.imagen_url) {
 
         imagenHTML = `
 
@@ -877,7 +862,6 @@ function crearRelacionada(
             >
 
         `;
-
     }
 
 
@@ -896,7 +880,9 @@ function crearRelacionada(
             <div class="relacionada-contenido">
 
 
-                <span class="relacionada-categoria">
+                <span
+                    class="relacionada-categoria"
+                >
 
                     ${escapeHTML(
                         noticia.categoria ||
@@ -926,7 +912,6 @@ function crearRelacionada(
         </article>
 
     `;
-
 }
 
 
@@ -934,9 +919,7 @@ function crearRelacionada(
 // WHATSAPP
 // ==========================================
 
-function compartirWhatsApp(
-    texto
-) {
+function compartirWhatsApp(texto) {
 
     const url =
         `https://wa.me/?text=${texto}`;
@@ -947,20 +930,25 @@ function compartirWhatsApp(
         "_blank",
         "noopener,noreferrer"
     );
-
 }
 
 
 // ==========================================
-// COPIAR ENLACE
+// COPIAR ENLACE LIMPIO
 // ==========================================
 
 async function copiarEnlace() {
 
+    const urlLimpia =
+        crearURLLimpia(
+            noticiaId
+        );
+
+
     try {
 
         await navigator.clipboard.writeText(
-            window.location.href
+            urlLimpia
         );
 
 
@@ -981,7 +969,7 @@ async function copiarEnlace() {
 
 
         textarea.value =
-            window.location.href;
+            urlLimpia;
 
 
         document.body.appendChild(
@@ -1001,9 +989,7 @@ async function copiarEnlace() {
 
 
         mostrarMensajeCopiado();
-
     }
-
 }
 
 
@@ -1022,7 +1008,6 @@ function mostrarMensajeCopiado() {
     if (!boton) {
 
         return;
-
     }
 
 
@@ -1043,7 +1028,6 @@ function mostrarMensajeCopiado() {
         },
         1800
     );
-
 }
 
 
@@ -1051,9 +1035,7 @@ function mostrarMensajeCopiado() {
 // SCHEMA NEWSARTICLE
 // ==========================================
 
-function crearSchemaNoticia(
-    datos
-) {
+function crearSchemaNoticia(datos) {
 
     const schemaAnterior =
         document.getElementById(
@@ -1064,7 +1046,6 @@ function crearSchemaNoticia(
     if (schemaAnterior) {
 
         schemaAnterior.remove();
-
     }
 
 
@@ -1136,16 +1117,11 @@ function crearSchemaNoticia(
     };
 
 
-    if (
-        datos.imagen
-    ) {
+    if (datos.imagen) {
 
         schema.image = [
-
             datos.imagen
-
         ];
-
     }
 
 
@@ -1172,7 +1148,6 @@ function crearSchemaNoticia(
     document.head.appendChild(
         script
     );
-
 }
 
 
@@ -1180,9 +1155,7 @@ function crearSchemaNoticia(
 // FORMATEAR CONTENIDO
 // ==========================================
 
-function formatearContenido(
-    contenido
-) {
+function formatearContenido(contenido) {
 
     if (!contenido) {
 
@@ -1196,17 +1169,14 @@ function formatearContenido(
             </p>
 
         `;
-
     }
 
 
     const parrafos =
-        contenido
-
+        String(contenido)
             .split(
                 /\n\s*\n/
             )
-
             .filter(
                 parrafo =>
                     parrafo.trim() !== ""
@@ -1214,7 +1184,6 @@ function formatearContenido(
 
 
     return parrafos
-
         .map(
             parrafo => `
 
@@ -1228,9 +1197,7 @@ function formatearContenido(
 
             `
         )
-
         .join("");
-
 }
 
 
@@ -1238,9 +1205,7 @@ function formatearContenido(
 // ESCAPAR HTML
 // ==========================================
 
-function escapeHTML(
-    texto
-) {
+function escapeHTML(texto) {
 
     if (
         texto === null ||
@@ -1248,7 +1213,6 @@ function escapeHTML(
     ) {
 
         return "";
-
     }
 
 
@@ -1278,7 +1242,6 @@ function escapeHTML(
             /'/g,
             "&#039;"
         );
-
 }
 
 
@@ -1286,29 +1249,17 @@ function escapeHTML(
 // ERROR
 // ==========================================
 
-function mostrarError(
-    mensaje
-) {
+function mostrarError(mensaje) {
 
-    // Cambiar título para una URL inválida
     document.title =
         "F360 | Noticia no encontrada";
 
 
-    const metaDescription =
-        document.getElementById(
-            "meta-description"
-        );
-
-
-    if (metaDescription) {
-
-        metaDescription.setAttribute(
-            "content",
-            "La noticia que buscás no está disponible en F360."
-        );
-
-    }
+    actualizarMeta(
+        "meta-description",
+        "content",
+        "La noticia que buscás no está disponible en F360."
+    );
 
 
     noticiaContainer.innerHTML = `
@@ -1338,5 +1289,4 @@ function mostrarError(
         </div>
 
     `;
-
 }
