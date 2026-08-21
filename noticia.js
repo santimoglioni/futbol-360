@@ -1,5 +1,5 @@
 // ==========================================
-// F360 - NOTICIAS
+// F360 - NOTICIA
 // ==========================================
 
 
@@ -40,6 +40,7 @@ const parametros =
         window.location.search
     );
 
+
 const noticiaId =
     parametros.get("id");
 
@@ -74,8 +75,14 @@ async function cargarNoticia() {
         await supabaseClient
             .from("noticias")
             .select("*")
-            .eq("id", noticiaId)
-            .eq("publicada", true)
+            .eq(
+                "id",
+                noticiaId
+            )
+            .eq(
+                "publicada",
+                true
+            )
             .single();
 
 
@@ -86,9 +93,11 @@ async function cargarNoticia() {
             error
         );
 
+
         mostrarError(
             "No pudimos encontrar esta noticia."
         );
+
 
         return;
     }
@@ -100,11 +109,105 @@ async function cargarNoticia() {
             "La noticia no existe."
         );
 
+
         return;
     }
 
 
-    mostrarNoticia(data);
+    // ======================================
+    // REGISTRAR VISITA
+    // ======================================
+
+    registrarVisita(
+        data.id
+    );
+
+
+    // ======================================
+    // MOSTRAR NOTICIA
+    // ======================================
+
+    mostrarNoticia(
+        data
+    );
+}
+
+
+// ==========================================
+// REGISTRAR VISITA
+// ==========================================
+
+async function registrarVisita(
+    idNoticia
+) {
+
+    if (!idNoticia) {
+
+        return;
+    }
+
+
+    /*
+        Evitamos contar varias veces
+        la misma noticia durante 30 minutos
+        desde el mismo navegador.
+    */
+
+    const clave =
+        `f360_visita_${idNoticia}`;
+
+
+    const ultimaVisita =
+        localStorage.getItem(
+            clave
+        );
+
+
+    const ahora =
+        Date.now();
+
+
+    if (
+        ultimaVisita &&
+        ahora -
+        Number(
+            ultimaVisita
+        ) <
+        30 * 60 * 1000
+    ) {
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        clave,
+        String(
+            ahora
+        )
+    );
+
+
+    const {
+        error
+    } =
+        await supabaseClient.rpc(
+            "registrar_visita",
+            {
+                p_noticia_id:
+                    idNoticia
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "F360 - Error registrando visita:",
+            error
+        );
+
+    }
 }
 
 
@@ -115,6 +218,11 @@ async function cargarNoticia() {
 async function mostrarNoticia(
     noticia
 ) {
+
+
+    // ======================================
+    // DATOS
+    // ======================================
 
     const titulo =
         noticia.titulo ||
@@ -132,7 +240,7 @@ async function mostrarNoticia(
 
 
     // ======================================
-    // FECHAS
+    // FECHA
     // ======================================
 
     const fechaPublicacion =
@@ -163,9 +271,14 @@ async function mostrarNoticia(
         fechaPublicacion.toLocaleDateString(
             "es-AR",
             {
-                day: "2-digit",
-                month: "long",
-                year: "numeric"
+                day:
+                    "2-digit",
+
+                month:
+                    "long",
+
+                year:
+                    "numeric"
             }
         );
 
@@ -174,14 +287,17 @@ async function mostrarNoticia(
         fechaPublicacion.toLocaleTimeString(
             "es-AR",
             {
-                hour: "2-digit",
-                minute: "2-digit"
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit"
             }
         );
 
 
     // ======================================
-    // URL
+    // URL DE LA NOTICIA
     // ======================================
 
     const urlNoticia =
@@ -199,11 +315,15 @@ async function mostrarNoticia(
     let imagenHTML = "";
 
 
-    if (noticia.imagen_url) {
+    if (
+        noticia.imagen_url
+    ) {
 
         imagenHTML = `
 
-            <div class="noticia-imagen-contenedor">
+            <div
+                class="noticia-imagen-contenedor"
+            >
 
                 <img
                     class="noticia-imagen"
@@ -274,12 +394,18 @@ async function mostrarNoticia(
 
 
     // ======================================
-    // HTML PRINCIPAL
+    // HTML DE LA NOTICIA
     // ======================================
 
     noticiaContainer.innerHTML = `
 
-        <div class="noticia-navegacion">
+        <!-- =================================
+             VOLVER
+        ================================== -->
+
+        <div
+            class="noticia-navegacion"
+        >
 
             <a
                 href="index.html"
@@ -293,6 +419,11 @@ async function mostrarNoticia(
         </div>
 
 
+
+        <!-- =================================
+             NOTICIA
+        ================================== -->
+
         <article
             class="noticia"
             itemscope
@@ -300,9 +431,7 @@ async function mostrarNoticia(
         >
 
 
-            <!-- =========================
-                 CATEGORÍA
-            ========================== -->
+            <!-- CATEGORÍA -->
 
             <div
                 class="noticia-categoria"
@@ -316,9 +445,8 @@ async function mostrarNoticia(
             </div>
 
 
-            <!-- =========================
-                 TÍTULO
-            ========================== -->
+
+            <!-- TÍTULO -->
 
             <h1
                 itemprop="headline"
@@ -331,9 +459,8 @@ async function mostrarNoticia(
             </h1>
 
 
-            <!-- =========================
-                 BAJADA
-            ========================== -->
+
+            <!-- BAJADA -->
 
             <p
                 class="noticia-bajada"
@@ -347,18 +474,18 @@ async function mostrarNoticia(
             </p>
 
 
-            <!-- =========================
-                 IMAGEN
-            ========================== -->
+
+            <!-- IMAGEN -->
 
             ${imagenHTML}
 
 
-            <!-- =========================
-                 AUTOR Y FECHA
-            ========================== -->
 
-            <div class="noticia-meta">
+            <!-- AUTOR Y FECHA -->
+
+            <div
+                class="noticia-meta"
+            >
 
                 <span>
 
@@ -370,8 +497,12 @@ async function mostrarNoticia(
                         itemtype="https://schema.org/Organization"
                     >
 
-                        <span itemprop="name">
+                        <span
+                            itemprop="name"
+                        >
+
                             F360
+
                         </span>
 
                     </strong>
@@ -379,8 +510,12 @@ async function mostrarNoticia(
                 </span>
 
 
-                <span class="noticia-meta-separador">
+                <span
+                    class="noticia-meta-separador"
+                >
+
                     •
+
                 </span>
 
 
@@ -398,8 +533,12 @@ async function mostrarNoticia(
                 </time>
 
 
-                <span class="noticia-meta-separador">
+                <span
+                    class="noticia-meta-separador"
+                >
+
                     •
+
                 </span>
 
 
@@ -422,9 +561,10 @@ async function mostrarNoticia(
             </div>
 
 
-            <!-- =========================
-                 CUERPO
-            ========================== -->
+
+            <!-- =================================
+                 CONTENIDO
+            ================================== -->
 
             <div
                 class="noticia-contenido"
@@ -436,11 +576,14 @@ async function mostrarNoticia(
             </div>
 
 
-            <!-- =========================
-                 BOTONES
-            ========================== -->
 
-            <div class="noticia-acciones">
+            <!-- =================================
+                 BOTONES
+            ================================== -->
+
+            <div
+                class="noticia-acciones"
+            >
 
                 <button
                     type="button"
@@ -473,9 +616,10 @@ async function mostrarNoticia(
         </article>
 
 
-        <!-- =========================
+
+        <!-- =================================
              RELACIONADAS
-        ========================== -->
+        ================================== -->
 
         <section
             class="noticias-relacionadas"
@@ -611,7 +755,9 @@ function actualizarSEO(
     );
 
 
-    if (datos.imagen) {
+    if (
+        datos.imagen
+    ) {
 
         actualizarMeta(
             "og-image",
@@ -645,7 +791,7 @@ function actualizarSEO(
 
 
 // ==========================================
-// META
+// ACTUALIZAR META
 // ==========================================
 
 function actualizarMeta(
@@ -708,13 +854,14 @@ function limitarDescripcion(
         limpio.substring(
             0,
             157
-        ) + "..."
+        ) +
+        "..."
     );
 }
 
 
 // ==========================================
-// RELACIONADAS
+// NOTICIAS RELACIONADAS
 // ==========================================
 
 async function cargarRelacionadas(
@@ -736,7 +883,9 @@ async function cargarRelacionadas(
     let consulta;
 
 
-    if (noticia.categoria) {
+    if (
+        noticia.categoria
+    ) {
 
         consulta =
             supabaseClient
@@ -763,10 +912,13 @@ async function cargarRelacionadas(
                 .order(
                     "created_at",
                     {
-                        ascending: false
+                        ascending:
+                            false
                     }
                 )
-                .limit(3);
+                .limit(
+                    3
+                );
 
     } else {
 
@@ -791,10 +943,13 @@ async function cargarRelacionadas(
                 .order(
                     "created_at",
                     {
-                        ascending: false
+                        ascending:
+                            false
                     }
                 )
-                .limit(3);
+                .limit(
+                    3
+                );
     }
 
 
@@ -812,6 +967,7 @@ async function cargarRelacionadas(
             error
         );
 
+
         return;
     }
 
@@ -824,26 +980,32 @@ async function cargarRelacionadas(
         contenedor.innerHTML =
             "";
 
+
         return;
     }
 
 
     contenedor.innerHTML = `
 
-        <h2 class="relacionadas-titulo">
+        <h2
+            class="relacionadas-titulo"
+        >
 
             También te puede interesar
 
         </h2>
 
 
-        <div class="relacionadas-grid">
+        <div
+            class="relacionadas-grid"
+        >
 
-            ${data
-                .map(
-                    crearRelacionada
-                )
-                .join("")
+            ${
+                data
+                    .map(
+                        crearRelacionada
+                    )
+                    .join("")
             }
 
         </div>
@@ -853,7 +1015,7 @@ async function cargarRelacionadas(
 
 
 // ==========================================
-// CREAR RELACIONADA
+// CREAR NOTICIA RELACIONADA
 // ==========================================
 
 function crearRelacionada(
@@ -862,7 +1024,9 @@ function crearRelacionada(
 
     let imagenHTML = `
 
-        <div class="relacionada-placeholder">
+        <div
+            class="relacionada-placeholder"
+        >
 
             F360
 
@@ -871,7 +1035,9 @@ function crearRelacionada(
     `;
 
 
-    if (noticia.imagen_url) {
+    if (
+        noticia.imagen_url
+    ) {
 
         imagenHTML = `
 
@@ -894,6 +1060,7 @@ function crearRelacionada(
         <article
             class="relacionada-card"
         >
+
 
             <div
                 class="relacionada-imagen"
@@ -934,6 +1101,7 @@ function crearRelacionada(
                 </a>
 
             </div>
+
 
         </article>
 
@@ -1019,7 +1187,6 @@ async function copiarEnlace() {
 
 
         mostrarMensajeCopiado();
-
     }
 }
 
@@ -1051,7 +1218,7 @@ function mostrarMensajeCopiado() {
 
 
     setTimeout(
-        function () {
+        function() {
 
             boton.textContent =
                 textoOriginal;
@@ -1160,12 +1327,13 @@ function crearSchemaNoticia(
     };
 
 
-    if (datos.imagen) {
+    if (
+        datos.imagen
+    ) {
 
         schema.image = [
             datos.imagen
         ];
-
     }
 
 
@@ -1208,8 +1376,10 @@ function formatearContenido(
         return `
 
             <p>
+
                 No hay contenido disponible
                 para esta noticia.
+
             </p>
 
         `;
@@ -1217,18 +1387,18 @@ function formatearContenido(
 
 
     /*
-        IMPORTANTE:
-
         Cada Enter que hagas en el panel
-        de publicación genera un párrafo nuevo.
+        genera un párrafo nuevo.
 
-        También funciona si el texto tiene
-        líneas en blanco entre párrafos.
+        También funciona si dejás una
+        línea en blanco entre párrafos.
     */
 
     const parrafos =
         String(contenido)
-            .split(/\r?\n+/)
+            .split(
+                /\r?\n+/
+            )
             .map(
                 function(parrafo) {
 
@@ -1239,7 +1409,9 @@ function formatearContenido(
             .filter(
                 function(parrafo) {
 
-                    return parrafo !== "";
+                    return (
+                        parrafo !== ""
+                    );
 
                 }
             );
@@ -1334,7 +1506,9 @@ function mostrarError(
 
     noticiaContainer.innerHTML = `
 
-        <div class="error-noticia">
+        <div
+            class="error-noticia"
+        >
 
             <h2>
 
