@@ -795,7 +795,6 @@ async function cargarRelacionadas(
                     }
                 )
                 .limit(3);
-
     }
 
 
@@ -1080,7 +1079,6 @@ function crearSchemaNoticia(
     if (anterior) {
 
         anterior.remove();
-
     }
 
 
@@ -1210,40 +1208,60 @@ function formatearContenido(
         return `
 
             <p>
-
                 No hay contenido disponible
                 para esta noticia.
-
             </p>
 
         `;
     }
 
 
+    /*
+        IMPORTANTE:
+
+        Cada Enter que hagas en el panel
+        de publicación genera un párrafo nuevo.
+
+        También funciona si el texto tiene
+        líneas en blanco entre párrafos.
+    */
+
     const parrafos =
         String(contenido)
-            .split(
-                /\n\s*\n/
+            .split(/\r?\n+/)
+            .map(
+                function(parrafo) {
+
+                    return parrafo.trim();
+
+                }
             )
             .filter(
-                parrafo =>
-                    parrafo.trim() !== ""
+                function(parrafo) {
+
+                    return parrafo !== "";
+
+                }
             );
 
 
     return parrafos
         .map(
-            parrafo => `
+            function(parrafo) {
 
-                <p>
+                return `
 
-                    ${escapeHTML(
-                        parrafo.trim()
-                    )}
+                    <p>
 
-                </p>
+                        ${escapeHTML(
+                            parrafo
+                        )}
 
-            `
+                    </p>
+
+                `;
+
+            }
         )
         .join("");
 }
