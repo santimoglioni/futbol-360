@@ -1,8 +1,13 @@
+// ==========================================
+// CONEXIÓN CON SUPABASE
+// ==========================================
+
 const SUPABASE_URL =
     "https://sxouqngithkiflbhdcii.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -11,11 +16,19 @@ const supabaseClient =
     );
 
 
+// ==========================================
+// ELEMENTOS
+// ==========================================
+
 const noticiaContainer =
     document.getElementById(
         "noticia-container"
     );
 
+
+// ==========================================
+// OBTENER ID
+// ==========================================
 
 const parametros =
     new URLSearchParams(
@@ -24,11 +37,21 @@ const parametros =
 
 
 const noticiaId =
-    parametros.get("id");
+    parametros.get(
+        "id"
+    );
 
+
+// ==========================================
+// CARGAR NOTICIA
+// ==========================================
 
 cargarNoticia();
 
+
+// ==========================================
+// FUNCIÓN PRINCIPAL
+// ==========================================
 
 async function cargarNoticia() {
 
@@ -48,16 +71,21 @@ async function cargarNoticia() {
         error
     } =
         await supabaseClient
+
             .from("noticias")
+
             .select("*")
+
             .eq(
                 "id",
                 noticiaId
             )
+
             .eq(
                 "publicada",
                 true
             )
+
             .single();
 
 
@@ -67,6 +95,7 @@ async function cargarNoticia() {
             "Error cargando noticia:",
             error
         );
+
 
         mostrarError(
             "No pudimos encontrar esta noticia."
@@ -83,6 +112,10 @@ async function cargarNoticia() {
 
 }
 
+
+// ==========================================
+// MOSTRAR NOTICIA
+// ==========================================
 
 async function mostrarNoticia(
     noticia
@@ -105,7 +138,9 @@ async function mostrarNoticia(
 
     const fecha =
         noticia.created_at
-            ? new Date(noticia.created_at)
+            ? new Date(
+                noticia.created_at
+            )
             : new Date();
 
 
@@ -138,13 +173,25 @@ async function mostrarNoticia(
         window.location.href;
 
 
-    document.title =
+    // ======================================
+    // SEO PRINCIPAL
+    // ======================================
+
+    const tituloSEO =
         `${titulo} | F360`;
 
 
+    document.title =
+        tituloSEO;
+
+
+    // ======================================
+    // META DESCRIPTION
+    // ======================================
+
     const metaDescription =
-        document.querySelector(
-            'meta[name="description"]'
+        document.getElementById(
+            "meta-description"
         );
 
 
@@ -152,11 +199,17 @@ async function mostrarNoticia(
 
         metaDescription.setAttribute(
             "content",
-            descripcion
+            limitarDescripcion(
+                descripcion
+            )
         );
 
     }
 
+
+    // ======================================
+    // CANONICAL
+    // ======================================
 
     const canonical =
         document.getElementById(
@@ -174,90 +227,65 @@ async function mostrarNoticia(
     }
 
 
-    const ogTitle =
-        document.getElementById(
-            "og-title"
-        );
+    // ======================================
+    // OPEN GRAPH
+    // ======================================
+
+    actualizarMeta(
+        "og-title",
+        "content",
+        tituloSEO
+    );
 
 
-    const ogDescription =
-        document.getElementById(
-            "og-description"
-        );
+    actualizarMeta(
+        "og-description",
+        "content",
+        descripcion
+    );
 
 
-    const ogImage =
-        document.getElementById(
-            "og-image"
-        );
+    actualizarMeta(
+        "og-url",
+        "content",
+        urlActual
+    );
 
 
-    const ogImageAlt =
-        document.getElementById(
-            "og-image-alt"
-        );
+    actualizarMeta(
+        "og-section",
+        "content",
+        categoria
+    );
 
 
-    const ogUrl =
-        document.getElementById(
-            "og-url"
-        );
+    actualizarMeta(
+        "og-published-time",
+        "content",
+        fechaISO
+    );
 
 
-    const ogSection =
-        document.getElementById(
-            "og-section"
-        );
-
-
-    const ogPublishedTime =
-        document.getElementById(
-            "og-published-time"
-        );
-
-
-    const ogModifiedTime =
-        document.getElementById(
-            "og-modified-time"
-        );
-
-
-    if (ogTitle) {
-
-        ogTitle.setAttribute(
-            "content",
-            titulo
-        );
-
-    }
-
-
-    if (ogDescription) {
-
-        ogDescription.setAttribute(
-            "content",
-            descripcion
-        );
-
-    }
+    actualizarMeta(
+        "og-modified-time",
+        "content",
+        fechaISO
+    );
 
 
     if (
-        ogImage &&
         noticia.imagen_url
     ) {
 
-        ogImage.setAttribute(
+        actualizarMeta(
+            "og-image",
             "content",
             noticia.imagen_url
         );
 
-    }
 
-
-    if (ogImageAlt) {
-
-        ogImageAlt.setAttribute(
+        actualizarMeta(
+            "og-image-alt",
             "content",
             titulo
         );
@@ -265,106 +293,37 @@ async function mostrarNoticia(
     }
 
 
-    if (ogUrl) {
+    // ======================================
+    // TWITTER / X
+    // ======================================
 
-        ogUrl.setAttribute(
-            "content",
-            urlActual
-        );
-
-    }
-
-
-    if (ogSection) {
-
-        ogSection.setAttribute(
-            "content",
-            categoria
-        );
-
-    }
+    actualizarMeta(
+        "twitter-title",
+        "content",
+        tituloSEO
+    );
 
 
-    if (ogPublishedTime) {
-
-        ogPublishedTime.setAttribute(
-            "content",
-            fechaISO
-        );
-
-    }
-
-
-    if (ogModifiedTime) {
-
-        ogModifiedTime.setAttribute(
-            "content",
-            fechaISO
-        );
-
-    }
-
-
-    const twitterTitle =
-        document.getElementById(
-            "twitter-title"
-        );
-
-
-    const twitterDescription =
-        document.getElementById(
-            "twitter-description"
-        );
-
-
-    const twitterImage =
-        document.getElementById(
-            "twitter-image"
-        );
-
-
-    const twitterImageAlt =
-        document.getElementById(
-            "twitter-image-alt"
-        );
-
-
-    if (twitterTitle) {
-
-        twitterTitle.setAttribute(
-            "content",
-            titulo
-        );
-
-    }
-
-
-    if (twitterDescription) {
-
-        twitterDescription.setAttribute(
-            "content",
-            descripcion
-        );
-
-    }
+    actualizarMeta(
+        "twitter-description",
+        "content",
+        descripcion
+    );
 
 
     if (
-        twitterImage &&
         noticia.imagen_url
     ) {
 
-        twitterImage.setAttribute(
+        actualizarMeta(
+            "twitter-image",
             "content",
             noticia.imagen_url
         );
 
-    }
 
-
-    if (twitterImageAlt) {
-
-        twitterImageAlt.setAttribute(
+        actualizarMeta(
+            "twitter-image-alt",
             "content",
             titulo
         );
@@ -372,10 +331,17 @@ async function mostrarNoticia(
     }
 
 
-    let imagenHTML = "";
+    // ======================================
+    // IMAGEN
+    // ======================================
+
+    let imagenHTML =
+        "";
 
 
-    if (noticia.imagen_url) {
+    if (
+        noticia.imagen_url
+    ) {
 
         imagenHTML = `
 
@@ -389,6 +355,7 @@ async function mostrarNoticia(
                     alt="${escapeHTML(
                         titulo
                     )}"
+                    loading="eager"
                 >
 
             </div>
@@ -398,11 +365,19 @@ async function mostrarNoticia(
     }
 
 
+    // ======================================
+    // WHATSAPP
+    // ======================================
+
     const textoWhatsApp =
         encodeURIComponent(
             `${titulo} - F360 ${urlActual}`
         );
 
+
+    // ======================================
+    // CONTENIDO
+    // ======================================
 
     noticiaContainer.innerHTML = `
 
@@ -420,10 +395,25 @@ async function mostrarNoticia(
         </div>
 
 
-        <article class="noticia">
+        <article
+            class="noticia"
+            itemscope
+            itemtype="https://schema.org/NewsArticle"
+        >
 
 
-            <div class="noticia-categoria">
+            <meta
+                itemprop="mainEntityOfPage"
+                content="${escapeHTML(
+                    urlActual
+                )}"
+            >
+
+
+            <div
+                class="noticia-categoria"
+                itemprop="articleSection"
+            >
 
                 ${escapeHTML(
                     categoria
@@ -432,7 +422,9 @@ async function mostrarNoticia(
             </div>
 
 
-            <h1>
+            <h1
+                itemprop="headline"
+            >
 
                 ${escapeHTML(
                     titulo
@@ -441,7 +433,10 @@ async function mostrarNoticia(
             </h1>
 
 
-            <p class="noticia-bajada">
+            <p
+                class="noticia-bajada"
+                itemprop="description"
+            >
 
                 ${escapeHTML(
                     descripcion
@@ -452,31 +447,46 @@ async function mostrarNoticia(
 
             <div class="noticia-meta">
 
+
                 <span>
 
                     Por
-                    <strong>
+
+                    <strong
+                        itemprop="author"
+                    >
+
                         F360
+
                     </strong>
 
                 </span>
 
 
-                <span class="noticia-meta-separador">
+                <span
+                    class="noticia-meta-separador"
+                >
 
                     •
 
                 </span>
 
 
-                <span>
+                <time
+                    itemprop="datePublished"
+                    datetime="${escapeHTML(
+                        fechaISO
+                    )}"
+                >
 
                     ${fechaVisible}
 
-                </span>
+                </time>
 
 
-                <span class="noticia-meta-separador">
+                <span
+                    class="noticia-meta-separador"
+                >
 
                     •
 
@@ -488,6 +498,7 @@ async function mostrarNoticia(
                     ${horaVisible}
 
                 </span>
+
 
             </div>
 
@@ -527,7 +538,10 @@ async function mostrarNoticia(
             ${imagenHTML}
 
 
-            <div class="noticia-contenido">
+            <div
+                class="noticia-contenido"
+                itemprop="articleBody"
+            >
 
                 ${formatearContenido(
                     noticia.contenido
@@ -548,6 +562,10 @@ async function mostrarNoticia(
 
     `;
 
+
+    // ======================================
+    // SCHEMA NEWSARTICLE
+    // ======================================
 
     crearSchemaNoticia({
 
@@ -573,12 +591,93 @@ async function mostrarNoticia(
     });
 
 
+    // ======================================
+    // NOTICIAS RELACIONADAS
+    // ======================================
+
     await cargarRelacionadas(
         noticia
     );
 
 }
 
+
+// ==========================================
+// ACTUALIZAR META
+// ==========================================
+
+function actualizarMeta(
+    id,
+    atributo,
+    valor
+) {
+
+    const elemento =
+        document.getElementById(
+            id
+        );
+
+
+    if (!elemento) {
+
+        return;
+
+    }
+
+
+    elemento.setAttribute(
+        atributo,
+        valor
+    );
+
+}
+
+
+// ==========================================
+// LIMITAR DESCRIPCIÓN
+// ==========================================
+
+function limitarDescripcion(
+    texto
+) {
+
+    if (!texto) {
+
+        return "";
+
+    }
+
+
+    const limpio =
+        String(texto)
+            .replace(
+                /\s+/g,
+                " "
+            )
+            .trim();
+
+
+    if (
+        limpio.length <= 160
+    ) {
+
+        return limpio;
+
+    }
+
+
+    return
+        limpio.substring(
+            0,
+            157
+        ) + "...";
+
+}
+
+
+// ==========================================
+// NOTICIAS RELACIONADAS
+// ==========================================
 
 async function cargarRelacionadas(
     noticia
@@ -600,11 +699,15 @@ async function cargarRelacionadas(
     let consulta;
 
 
-    if (noticia.categoria) {
+    if (
+        noticia.categoria
+    ) {
 
         consulta =
             supabaseClient
+
                 .from("noticias")
+
                 .select(`
                     id,
                     titulo,
@@ -612,31 +715,40 @@ async function cargarRelacionadas(
                     imagen_url,
                     created_at
                 `)
+
                 .eq(
                     "publicada",
                     true
                 )
+
                 .eq(
                     "categoria",
                     noticia.categoria
                 )
+
                 .neq(
                     "id",
                     noticia.id
                 )
+
                 .order(
                     "created_at",
                     {
                         ascending: false
                     }
                 )
-                .limit(3);
+
+                .limit(
+                    3
+                );
 
     } else {
 
         consulta =
             supabaseClient
+
                 .from("noticias")
+
                 .select(`
                     id,
                     titulo,
@@ -644,21 +756,27 @@ async function cargarRelacionadas(
                     imagen_url,
                     created_at
                 `)
+
                 .eq(
                     "publicada",
                     true
                 )
+
                 .neq(
                     "id",
                     noticia.id
                 )
+
                 .order(
                     "created_at",
                     {
                         ascending: false
                     }
                 )
-                .limit(3);
+
+                .limit(
+                    3
+                );
 
     }
 
@@ -723,6 +841,10 @@ async function cargarRelacionadas(
 }
 
 
+// ==========================================
+// CREAR NOTICIA RELACIONADA
+// ==========================================
+
 function crearRelacionada(
     noticia
 ) {
@@ -738,7 +860,9 @@ function crearRelacionada(
     `;
 
 
-    if (noticia.imagen_url) {
+    if (
+        noticia.imagen_url
+    ) {
 
         imagenHTML = `
 
@@ -783,7 +907,9 @@ function crearRelacionada(
 
 
                 <a
-                    href="noticia.html?id=${noticia.id}"
+                    href="noticia.html?id=${encodeURIComponent(
+                        noticia.id
+                    )}"
                     class="relacionada-titulo"
                 >
 
@@ -804,6 +930,10 @@ function crearRelacionada(
 }
 
 
+// ==========================================
+// WHATSAPP
+// ==========================================
+
 function compartirWhatsApp(
     texto
 ) {
@@ -820,6 +950,10 @@ function compartirWhatsApp(
 
 }
 
+
+// ==========================================
+// COPIAR ENLACE
+// ==========================================
 
 async function copiarEnlace() {
 
@@ -873,6 +1007,10 @@ async function copiarEnlace() {
 }
 
 
+// ==========================================
+// MENSAJE COPIADO
+// ==========================================
+
 function mostrarMensajeCopiado() {
 
     const boton =
@@ -908,6 +1046,10 @@ function mostrarMensajeCopiado() {
 
 }
 
+
+// ==========================================
+// SCHEMA NEWSARTICLE
+// ==========================================
 
 function crearSchemaNoticia(
     datos
@@ -952,6 +1094,7 @@ function crearSchemaNoticia(
         "inLanguage":
             "es-AR",
 
+
         "author": {
 
             "@type":
@@ -964,6 +1107,7 @@ function crearSchemaNoticia(
                 "https://futbol-360.vercel.app/"
 
         },
+
 
         "publisher": {
 
@@ -978,6 +1122,7 @@ function crearSchemaNoticia(
 
         },
 
+
         "mainEntityOfPage": {
 
             "@type":
@@ -991,10 +1136,14 @@ function crearSchemaNoticia(
     };
 
 
-    if (datos.imagen) {
+    if (
+        datos.imagen
+    ) {
 
         schema.image = [
+
             datos.imagen
+
         ];
 
     }
@@ -1027,6 +1176,10 @@ function crearSchemaNoticia(
 }
 
 
+// ==========================================
+// FORMATEAR CONTENIDO
+// ==========================================
+
 function formatearContenido(
     contenido
 ) {
@@ -1049,9 +1202,11 @@ function formatearContenido(
 
     const parrafos =
         contenido
+
             .split(
                 /\n\s*\n/
             )
+
             .filter(
                 parrafo =>
                     parrafo.trim() !== ""
@@ -1059,6 +1214,7 @@ function formatearContenido(
 
 
     return parrafos
+
         .map(
             parrafo => `
 
@@ -1072,10 +1228,15 @@ function formatearContenido(
 
             `
         )
+
         .join("");
 
 }
 
+
+// ==========================================
+// ESCAPAR HTML
+// ==========================================
 
 function escapeHTML(
     texto
@@ -1121,9 +1282,34 @@ function escapeHTML(
 }
 
 
+// ==========================================
+// ERROR
+// ==========================================
+
 function mostrarError(
     mensaje
 ) {
+
+    // Cambiar título para una URL inválida
+    document.title =
+        "F360 | Noticia no encontrada";
+
+
+    const metaDescription =
+        document.getElementById(
+            "meta-description"
+        );
+
+
+    if (metaDescription) {
+
+        metaDescription.setAttribute(
+            "content",
+            "La noticia que buscás no está disponible en F360."
+        );
+
+    }
+
 
     noticiaContainer.innerHTML = `
 
