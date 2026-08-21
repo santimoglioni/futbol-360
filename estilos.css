@@ -1,6 +1,6 @@
-/* =========================
-   CONFIGURACIÓN GENERAL
-========================= */
+/* ==========================================
+   RESET
+========================================== */
 
 * {
     margin: 0;
@@ -9,957 +9,761 @@
 }
 
 
-html {
-    scroll-behavior: smooth;
-}
-
+/* ==========================================
+   BODY
+========================================== */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-
     background: #f4f4f4;
-
     color: #111;
 
-    overflow-x: hidden;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
+
+/* ==========================================
+   GENERAL
+========================================== */
 
 .contenedor {
     width: 92%;
-
-    max-width: 1250px;
-
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 
-a {
-    text-decoration: none;
-}
-
-
-/* =========================
-   ENCABEZADO
-========================= */
+/* ==========================================
+   HEADER
+========================================== */
 
 .header {
-    background: #050505;
-
-    color: white;
+    background: #fff;
+    border-top: 4px solid #080808;
+    border-bottom: 1px solid #ddd;
 }
-
 
 .header-contenido {
-    min-height: 125px;
+    min-height: 105px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    gap: 30px;
 }
-
-
-/* =========================
-   LOGO
-========================= */
 
 .logo {
-    font-size: 65px;
-
-    font-weight: 900;
-
-    font-style: italic;
-
-    letter-spacing: -6px;
-
-    color: white;
-
+    color: #111;
     text-decoration: none;
 
-    flex-shrink: 0;
-}
+    font-size: 52px;
+    font-weight: 900;
+    font-style: italic;
 
+    letter-spacing: -5px;
+    line-height: 1;
+}
 
 .logo span {
     color: #168cff;
 }
 
-
 .lema {
-    color: #ddd;
+    color: #555;
 
     font-size: 14px;
-
-    letter-spacing: 3px;
-
-    text-align: right;
+    font-weight: 600;
+    letter-spacing: .5px;
 }
 
 
-/* =========================
-   MENU
-========================= */
+/* ==========================================
+   MENÚ
+========================================== */
 
 .menu {
-    background: #101010;
-
-    border-bottom: 3px solid #168cff;
-
-    position: relative;
-
-    z-index: 20;
+    background: #080808;
 }
-
 
 .menu-contenido {
+    min-height: 58px;
+
     display: flex;
-
     align-items: center;
-}
 
+    gap: 0;
+}
 
 .menu a {
-    color: white;
+    display: flex;
+    align-items: center;
+
+    min-height: 58px;
+
+    padding: 0 24px;
+
+    color: #fff;
+    text-decoration: none;
 
     font-size: 14px;
+    font-weight: 800;
 
-    font-weight: bold;
-
-    padding: 21px 25px;
-
-    transition: 0.2s;
-
-    display: block;
+    transition:
+        background .2s ease,
+        color .2s ease;
 }
-
 
 .menu a:hover {
     background: #168cff;
+    color: #fff;
 }
-
 
 .menu a.activo {
-    color: #168cff;
-
-    border-bottom: 3px solid #168cff;
+    background: #168cff;
 }
-
-
-/* =========================
-   BUSCADOR
-========================= */
 
 .buscar {
     margin-left: auto;
 
+    width: 58px;
+    height: 58px;
+
+    border: 0;
     background: transparent;
 
-    border: none;
+    color: #fff;
 
-    color: white;
-
-    font-size: 30px;
+    font-size: 28px;
 
     cursor: pointer;
 
-    display: flex !important;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-width: 55px;
+    transition:
+        background .2s ease;
 }
-
 
 .buscar:hover {
     background: #168cff;
 }
 
 
-/* =========================
-   CONTENIDO PRINCIPAL
-========================= */
+/* ==========================================
+   PÁGINA PRINCIPAL
+========================================== */
 
 .pagina {
-    padding-top: 25px;
+    padding-top: 30px;
+    padding-bottom: 70px;
+}
 
-    padding-bottom: 60px;
 
+/* ==========================================
+   PRINCIPAL + LO ÚLTIMO
+========================================== */
+
+.noticia-principal {
+    width: 100%;
+}
+
+.pagina {
     display: grid;
 
     grid-template-columns:
         minmax(0, 1fr)
-        350px;
+        300px;
 
-    gap: 25px;
+    column-gap: 30px;
+    row-gap: 38px;
 }
 
 
-/* =========================
+/* ==========================================
    NOTICIA PRINCIPAL
-========================= */
-
-.noticia-principal {
-    min-width: 0;
-}
-
+========================================== */
 
 .foto-principal {
-    height: 500px;
-
     position: relative;
 
-    background:
-        linear-gradient(
-            135deg,
-            #111,
-            #333
-        );
+    width: 100%;
+    min-height: 535px;
 
-    background-size: cover;
-
+    background-color: #111;
     background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
     overflow: hidden;
 
-    transition:
-        background-image 0.3s ease;
+    display: flex;
+    align-items: flex-end;
 }
 
-
-.foto-principal::before {
-    content: "F360";
+.foto-principal::after {
+    content: "";
 
     position: absolute;
+    inset: 0;
 
-    right: 50px;
-
-    top: 50px;
-
-    font-size: 150px;
-
-    font-weight: 900;
-
-    font-style: italic;
-
-    color: rgba(
-        255,
-        255,
-        255,
-        0.04
-    );
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, .88),
+            rgba(0, 0, 0, .05) 70%
+        );
 
     pointer-events: none;
 }
 
-
 .texto-principal {
-    position: absolute;
-
-    left: 40px;
-
-    right: 40px;
-
-    bottom: 40px;
-
-    color: white;
-
+    position: relative;
     z-index: 2;
-}
 
+    width: 100%;
+
+    padding:
+        45px
+        48px
+        42px;
+
+    color: #fff;
+}
 
 .categoria {
-    color: #168cff;
-
-    font-size: 13px;
-
-    font-weight: bold;
-
-    letter-spacing: 0.5px;
-}
-
-
-.texto-principal h1 {
-    font-size: 48px;
-
-    line-height: 1.05;
-
-    margin: 10px 0;
-
-    max-width: 750px;
-}
-
-
-.texto-principal p {
-    color: #ddd;
-
-    font-size: 17px;
-
-    line-height: 1.5;
-
-    max-width: 700px;
-
-    margin-bottom: 20px;
-}
-
-
-/* =========================
-   BOTONES
-========================= */
-
-.boton {
     display: inline-block;
 
-    background: #087de0;
-
-    color: white;
-
-    padding: 13px 20px;
+    color: #168cff;
 
     font-size: 13px;
-
-    font-weight: bold;
-
-    transition: 0.2s;
-}
-
-
-.boton:hover {
-    background: #168cff;
-}
-
-
-/* =========================
-   TÍTULOS
-========================= */
-
-.titulo-seccion {
-    border-bottom: 2px solid #111;
-
-    margin-bottom: 18px;
-
-    position: relative;
-}
-
-
-.titulo-seccion::after {
-    content: "";
-
-    position: absolute;
-
-    bottom: -2px;
-
-    left: 0;
-
-    width: 100px;
-
-    height: 4px;
-
-    background: #168cff;
-}
-
-
-.titulo-seccion h2 {
-    font-family: Georgia, serif;
-
-    font-size: 24px;
-
-    padding-bottom: 10px;
-}
-
-
-/* =========================
-   LO ÚLTIMO
-========================= */
-
-.mas-leidas {
-    background: white;
-
-    padding: 25px;
-
-    height: fit-content;
-
-    min-width: 0;
-}
-
-
-.ranking {
-    display: flex;
-
-    gap: 17px;
-
-    padding: 20px 0;
-
-    border-bottom: 1px solid #ddd;
-
-    min-width: 0;
-}
-
-
-.ranking span {
-    color: #168cff;
-
-    font-size: 25px;
-
-    font-weight: bold;
-
-    flex-shrink: 0;
-}
-
-
-.ranking p {
-    font-family: Georgia, serif;
-
-    font-size: 17px;
-
-    line-height: 1.25;
-}
-
-
-/* =========================
-   LO ÚLTIMO - CONTENIDO
-========================= */
-
-.lo-ultimo-contenido {
-    min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 6px;
-}
-
-
-.lo-ultimo-categoria {
-    color: #168cff;
-
-    font-size: 10px;
-
-    font-weight: bold;
+    font-weight: 900;
 
     text-transform: uppercase;
+
+    margin-bottom: 12px;
 }
 
+.texto-principal h1 {
+    max-width: 900px;
 
-.lo-ultimo-titulo {
-    color: #111;
+    color: #fff;
 
-    font-family: Georgia, serif;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    font-size: 17px;
+    font-size: clamp(38px, 4vw, 58px);
 
-    line-height: 1.25;
+    line-height: 1.02;
 
-    transition: 0.2s;
+    letter-spacing: -1px;
+
+    margin-bottom: 18px;
 }
 
+.texto-principal p {
+    max-width: 850px;
 
-.lo-ultimo-titulo:hover {
-    color: #168cff;
-}
+    color: #eee;
 
-
-/* =========================
-   ÚLTIMAS NOTICIAS
-========================= */
-
-.ultimas {
-    grid-column: 1;
-
-    margin-top: 5px;
-}
-
-
-.noticias-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-}
-
-
-.card {
-    background: white;
-
-    border: 1px solid #ddd;
-
-    transition: 0.2s;
-
-    overflow: hidden;
-
-    min-width: 0;
-}
-
-
-.card:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 5px 20px
-        rgba(
-            0,
-            0,
-            0,
-            0.08
-        );
-}
-
-
-/* =========================
-   IMAGEN DE TARJETA
-========================= */
-
-.foto-card {
-    height: 190px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #333,
-            #666
-        );
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color: white;
-
-    font-weight: bold;
-
-    overflow: hidden;
-}
-
-
-.foto-card img {
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-}
-
-
-/* =========================
-   CONTENIDO TARJETA
-========================= */
-
-.card-contenido {
-    padding: 18px;
-}
-
-
-.card h3 {
-    font-family: Georgia, serif;
-
-    font-size: 21px;
-
-    line-height: 1.2;
-
-    margin: 8px 0;
-}
-
-
-.card p {
-    color: #666;
-
-    line-height: 1.4;
-
-    font-size: 14px;
-}
-
-
-/* =========================
-   LEER NOTA
-========================= */
-
-.leer-nota {
-    display: inline-block;
-
-    margin-top: 15px;
-
-    color: #168cff;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
-    transition: 0.2s;
-}
-
-
-.leer-nota:hover {
-    color: #087de0;
-}
-
-
-/* =========================
-   CARGANDO / ERRORES
-========================= */
-
-.cargando {
-    grid-column: 1 / -1;
-
-    width: 100%;
-
-    text-align: center;
-
-    padding: 50px 20px;
-
-    color: #777;
-
-    font-size: 15px;
-}
-
-
-.error-noticias {
-    grid-column: 1 / -1;
-
-    width: 100%;
-
-    text-align: center;
-
-    padding: 50px 20px;
-
-    color: #c00;
-
-    font-size: 15px;
-}
-
-
-/* =========================
-   MERCADO DE PASES
-========================= */
-
-.mercado {
-    grid-column: 2;
-
-    grid-row: 2;
-
-    min-height: 300px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #050505,
-            #171717
-        );
-
-    color: white;
-
-    padding: 35px;
-
-    position: relative;
-
-    overflow: hidden;
-}
-
-
-.mercado h2 {
-    font-size: 29px;
-
-    line-height: 1.1;
-
-    margin: 12px 0;
-}
-
-
-.mercado p {
-    color: #bbb;
-
+    font-size: 18px;
     line-height: 1.5;
 
     margin-bottom: 25px;
 }
 
+.boton {
+    display: inline-block;
 
-.flecha {
+    padding:
+        14px
+        22px;
+
+    background: #168cff;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.boton:hover {
+    background: #0875d1;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   LO ÚLTIMO
+========================================== */
+
+.mas-leidas {
+    min-width: 0;
+
+    background: #fff;
+
+    padding:
+        28px
+        24px;
+
+    align-self: start;
+}
+
+.titulo-seccion {
+    border-bottom:
+        1px solid #ddd;
+
+    margin-bottom: 5px;
+}
+
+.titulo-seccion h2 {
+    position: relative;
+
+    display: inline-block;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 29px;
+
+    line-height: 1.1;
+
+    padding-bottom: 13px;
+}
+
+.titulo-seccion h2::after {
+    content: "";
+
     position: absolute;
 
-    right: -10px;
+    left: 0;
+    bottom: -1px;
 
-    bottom: -35px;
+    width: 55px;
+    height: 4px;
 
-    font-size: 170px;
+    background: #168cff;
+}
+
+#lo-ultimo-container {
+    width: 100%;
+}
+
+.ranking {
+    display: grid;
+
+    grid-template-columns: 42px minmax(0, 1fr);
+
+    gap: 10px;
+
+    align-items: start;
+
+    padding:
+        20px
+        0;
+
+    border-bottom:
+        1px solid #ddd;
+}
+
+.ranking:last-child {
+    border-bottom: 0;
+}
+
+.ranking > span {
+    color: #168cff;
+
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.ranking p {
+    min-width: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 17px;
+
+    line-height: 1.3;
+}
+
+.ranking a {
+    display: block;
+
+    color: #111;
+
+    text-decoration: none;
+
+    transition: color .2s ease;
+}
+
+.ranking a:hover {
+    color: #168cff;
+}
+
+
+/* ==========================================
+   ÚLTIMAS NOTICIAS
+========================================== */
+
+.ultimas {
+    grid-column: 1 / -1;
+
+    min-width: 0;
+}
+
+.ultimas .titulo-seccion {
+    margin-bottom: 25px;
+}
+
+.ultimas .titulo-seccion h2 {
+    font-size: 34px;
+}
+
+.noticias-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+/* ==========================================
+   TARJETAS
+========================================== */
+
+.card {
+    min-width: 0;
+
+    background: #fff;
+
+    border:
+        1px solid #ddd;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, .10);
+}
+
+.foto-card {
+    width: 100%;
+    height: 220px;
+
+    background: #111;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foto-card img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform .35s ease;
+}
+
+.card:hover .foto-card img {
+    transform: scale(1.03);
+}
+
+.foto-card span {
+    color: #168cff;
+
+    font-size: 28px;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.card-contenido {
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+
+.card-contenido .categoria {
+    margin-bottom: 10px;
+
+    font-size: 11px;
+}
+
+.card h3 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+    line-height: 1.15;
+
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #666;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+}
+
+.leer-nota {
+    margin-top: auto;
 
     color: #168cff;
 
-    opacity: 0.35;
+    text-decoration: none;
 
-    transform: rotate(-15deg);
+    font-size: 12px;
+    font-weight: 900;
+}
 
-    pointer-events: none;
+.leer-nota:hover {
+    text-decoration: underline;
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* ==========================================
+   MERCADO DE PASES
+========================================== */
 
-footer {
-    background: #050505;
+.mercado {
+    grid-column: 1 / -1;
 
-    color: white;
+    position: relative;
 
-    padding: 40px 0;
+    overflow: hidden;
+
+    background: #080808;
+
+    color: #fff;
+
+    padding:
+        45px
+        50px;
+
+    margin-top: 5px;
+}
+
+.mercado .categoria {
+    margin-bottom: 10px;
+}
+
+.mercado h2 {
+    max-width: 700px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 38px;
+    line-height: 1.1;
+
+    margin-bottom: 12px;
+}
+
+.mercado p {
+    max-width: 650px;
+
+    color: #bbb;
+
+    font-size: 16px;
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+.mercado .flecha {
+    position: absolute;
+
+    right: 45px;
+    bottom: 25px;
+
+    color: #168cff;
+
+    font-size: 90px;
+    line-height: 1;
+
+    opacity: .8;
 }
 
 
-.footer-contenido {
+/* ==========================================
+   CARGANDO / ERROR
+========================================== */
+
+.cargando {
+    color: #777;
+
+    text-align: center;
+
+    padding: 50px 20px;
+}
+
+.error-noticias {
+    background: #fff;
+
+    color: #c00;
+
+    padding: 35px;
+
     text-align: center;
 }
 
 
-.footer-contenido .logo {
-    font-size: 45px;
+/* ==========================================
+   FOOTER
+========================================== */
 
-    margin-bottom: 10px;
+footer {
+    background: #080808;
+
+    color: #fff;
+
+    padding: 40px 0;
 }
 
+.footer-contenido {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+}
 
 .footer-contenido p {
     color: #aaa;
-
-    margin: 7px;
 }
 
-
-.copyright {
+.footer-contenido .copyright {
     font-size: 12px;
 }
 
 
-/* =================================================
+/* ==========================================
    TABLET
-================================================= */
+========================================== */
 
-@media (max-width: 1050px) {
+@media (max-width: 1000px) {
 
     .contenedor {
         width: 94%;
     }
 
-
-    .menu a {
-        padding-left: 18px;
-
-        padding-right: 18px;
-
-        font-size: 13px;
-    }
-
-
     .pagina {
         grid-template-columns:
             minmax(0, 1fr)
-            300px;
+            260px;
 
-        gap: 18px;
+        column-gap: 20px;
     }
 
+    .foto-principal {
+        min-height: 500px;
+    }
+
+    .texto-principal {
+        padding:
+            35px
+            32px;
+    }
 
     .texto-principal h1 {
-        font-size: 40px;
+        font-size: 42px;
     }
-
 
     .noticias-grid {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2, minmax(0, 1fr));
     }
 
 }
 
 
-/* =================================================
-   CELULAR GRANDE
-================================================= */
+/* ==========================================
+   TABLET PEQUEÑA
+========================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
 
     .header-contenido {
-        min-height: auto;
-
-        flex-direction: column;
-
-        padding: 18px 0;
-
-        gap: 8px;
-
-        justify-content: center;
+        min-height: 95px;
     }
-
-
-    .logo {
-        font-size: 50px;
-
-        line-height: 1;
-    }
-
 
     .lema {
-        font-size: 10px;
-
-        letter-spacing: 2px;
-
-        text-align: center;
+        font-size: 12px;
     }
-
-
-    /* =====================
-       MENU
-    ===================== */
-
-    .menu-contenido {
-        width: 100%;
-
-        overflow-x: auto;
-
-        overflow-y: hidden;
-
-        scrollbar-width: none;
-
-        -webkit-overflow-scrolling: touch;
-    }
-
-
-    .menu-contenido::-webkit-scrollbar {
-        display: none;
-    }
-
 
     .menu a {
-        flex-shrink: 0;
-
-        white-space: nowrap;
-
-        padding: 17px 14px;
+        padding: 0 15px;
 
         font-size: 12px;
     }
 
-
-    .buscar {
-        margin-left: 0;
-
-        min-width: 50px;
-    }
-
-
-    /* =====================
-       CONTENIDO
-    ===================== */
-
     .pagina {
-        display: flex;
-
-        flex-direction: column;
-
-        gap: 25px;
-
-        padding-top: 18px;
-
-        padding-bottom: 45px;
+        grid-template-columns: 1fr;
     }
 
-
-    /* =====================
-       PRINCIPAL
-    ===================== */
-
-    .foto-principal {
-        height: 460px;
+    .noticia-principal,
+    .mas-leidas,
+    .ultimas,
+    .mercado {
+        grid-column: 1;
     }
-
-
-    .texto-principal {
-        left: 25px;
-
-        right: 25px;
-
-        bottom: 25px;
-    }
-
-
-    .texto-principal h1 {
-        font-size: 36px;
-    }
-
-
-    .texto-principal p {
-        font-size: 15px;
-
-        max-width: 650px;
-    }
-
-
-    /* =====================
-       LO ÚLTIMO
-    ===================== */
 
     .mas-leidas {
         width: 100%;
-
-        padding: 22px;
     }
 
-
-    .ranking {
-        padding: 16px 0;
-    }
-
-
-    /* =====================
-       ÚLTIMAS
-    ===================== */
-
-    .ultimas {
-        width: 100%;
-
-        margin-top: 0;
-    }
-
-
-    .noticias-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-
-        gap: 15px;
-    }
-
-
-    /* =====================
-       MERCADO
-    ===================== */
-
-    .mercado {
-        width: 100%;
-
-        min-height: 280px;
-
-        padding: 30px;
-
-        order: 4;
+    .foto-principal {
+        min-height: 500px;
     }
 
 }
 
 
-/* =================================================
+/* ==========================================
    CELULAR
-================================================= */
+========================================== */
 
 @media (max-width: 600px) {
 
@@ -968,301 +772,199 @@ footer {
     }
 
 
-    /* =====================
-       HEADER
-    ===================== */
+    /* HEADER */
 
     .header-contenido {
-        padding: 15px 0;
-    }
+        min-height: auto;
 
+        padding:
+            20px
+            0;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap: 10px;
+    }
 
     .logo {
-        font-size: 43px;
-
-        letter-spacing: -4px;
+        font-size: 44px;
     }
-
 
     .lema {
-        font-size: 9px;
+        font-size: 11px;
 
-        letter-spacing: 1.5px;
-
-        line-height: 1.4;
+        text-align: center;
     }
 
 
-    /* =====================
-       MENU
-    ===================== */
+    /* MENÚ */
 
-    .menu {
-        border-bottom-width: 2px;
+    .menu-contenido {
+        min-height: 55px;
+
+        overflow-x: auto;
+
+        white-space: nowrap;
+
+        scrollbar-width: none;
     }
 
+    .menu-contenido::-webkit-scrollbar {
+        display: none;
+    }
 
     .menu a {
-        padding: 15px 12px;
+        min-height: 55px;
+
+        padding:
+            0
+            15px;
 
         font-size: 11px;
     }
-
 
     .buscar {
-        font-size: 26px;
+        flex-shrink: 0;
 
-        min-width: 48px;
-
-        padding-left: 12px !important;
-
-        padding-right: 12px !important;
+        width: 50px;
+        height: 55px;
     }
 
 
-    /* =====================
-       PRINCIPAL
-    ===================== */
+    /* PÁGINA */
 
     .pagina {
-        gap: 20px;
+        padding-top: 20px;
 
-        padding-top: 15px;
-
-        padding-bottom: 35px;
+        row-gap: 25px;
     }
 
+
+    /* PRINCIPAL */
 
     .foto-principal {
-        height: 430px;
+        min-height: 470px;
     }
-
-
-    .foto-principal::before {
-        right: 15px;
-
-        top: 25px;
-
-        font-size: 90px;
-    }
-
 
     .texto-principal {
-        left: 20px;
-
-        right: 20px;
-
-        bottom: 20px;
+        padding:
+            28px
+            22px
+            25px;
     }
-
-
-    .categoria {
-        font-size: 11px;
-    }
-
 
     .texto-principal h1 {
-        font-size: 29px;
+        font-size: 34px;
 
-        line-height: 1.08;
+        line-height: 1.05;
 
-        margin: 8px 0;
+        letter-spacing: -.5px;
+
+        margin-bottom: 14px;
     }
-
 
     .texto-principal p {
-        font-size: 14px;
+        font-size: 15px;
 
-        line-height: 1.4;
+        line-height: 1.45;
 
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
-
     .boton {
-        padding: 11px 15px;
+        padding:
+            12px
+            17px;
 
         font-size: 11px;
     }
 
 
-    /* =====================
-       TÍTULOS
-    ===================== */
-
-    .titulo-seccion {
-        margin-bottom: 12px;
-    }
-
-
-    .titulo-seccion h2 {
-        font-size: 21px;
-
-        padding-bottom: 8px;
-    }
-
-
-    /* =====================
-       LO ÚLTIMO
-    ===================== */
+    /* LO ÚLTIMO */
 
     .mas-leidas {
-        padding: 18px;
+        padding:
+            25px
+            20px;
     }
 
+    .titulo-seccion h2 {
+        font-size: 27px;
+    }
 
     .ranking {
-        gap: 12px;
+        grid-template-columns:
+            35px minmax(0, 1fr);
 
-        padding: 14px 0;
+        padding:
+            17px
+            0;
     }
 
-
-    .ranking span {
-        font-size: 21px;
-    }
-
-
-    .lo-ultimo-titulo {
+    .ranking p {
         font-size: 16px;
     }
 
 
-    /* =====================
-       ÚLTIMAS NOTICIAS
-    ===================== */
+    /* ÚLTIMAS */
+
+    .ultimas .titulo-seccion h2 {
+        font-size: 30px;
+    }
 
     .noticias-grid {
         grid-template-columns: 1fr;
 
-        gap: 16px;
+        gap: 18px;
     }
-
 
     .foto-card {
-        height: 210px;
+        height: 230px;
     }
-
 
     .card-contenido {
-        padding: 16px;
+        padding: 20px;
     }
-
 
     .card h3 {
-        font-size: 20px;
+        font-size: 23px;
     }
 
 
-    .card p {
-        font-size: 14px;
-    }
-
-
-    /* =====================
-       MERCADO
-    ===================== */
+    /* MERCADO */
 
     .mercado {
-        min-height: 270px;
-
-        padding: 25px;
-
-        margin-top: 0;
+        padding:
+            35px
+            25px;
     }
-
 
     .mercado h2 {
-        font-size: 25px;
+        font-size: 31px;
     }
-
 
     .mercado p {
-        font-size: 14px;
+        font-size: 15px;
+    }
 
-        max-width: 85%;
+    .mercado .flecha {
+        right: 15px;
+        bottom: 10px;
+
+        font-size: 65px;
     }
 
 
-    .flecha {
-        font-size: 120px;
+    /* FOOTER */
 
-        right: -5px;
+    .footer-contenido {
+        flex-direction: column;
 
-        bottom: -25px;
-    }
+        text-align: center;
 
-
-    /* =====================
-       FOOTER
-    ===================== */
-
-    footer {
-        padding: 30px 0;
-    }
-
-
-    .footer-contenido .logo {
-        font-size: 38px;
-    }
-
-
-    .footer-contenido p {
-        font-size: 13px;
-    }
-
-
-    .copyright {
-        font-size: 10px !important;
-    }
-
-}
-
-
-/* =================================================
-   CELULAR MUY PEQUEÑO
-================================================= */
-
-@media (max-width: 380px) {
-
-    .logo {
-        font-size: 38px;
-    }
-
-
-    .lema {
-        font-size: 8px;
-
-        letter-spacing: 1px;
-    }
-
-
-    .menu a {
-        padding-left: 10px;
-
-        padding-right: 10px;
-
-        font-size: 10px;
-    }
-
-
-    .foto-principal {
-        height: 400px;
-    }
-
-
-    .texto-principal h1 {
-        font-size: 26px;
-    }
-
-
-    .texto-principal p {
-        font-size: 13px;
-    }
-
-
-    .mercado h2 {
-        font-size: 23px;
+        gap: 15px;
     }
 
 }
