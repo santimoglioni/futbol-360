@@ -13,7 +13,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
 
-
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -39,7 +38,6 @@ const parametros =
     new URLSearchParams(
         window.location.search
     );
-
 
 const noticiaId =
     parametros.get("id");
@@ -67,7 +65,6 @@ async function cargarNoticia() {
         return;
     }
 
-
     const {
         data,
         error
@@ -85,7 +82,6 @@ async function cargarNoticia() {
             )
             .single();
 
-
     if (error) {
 
         console.error(
@@ -93,15 +89,12 @@ async function cargarNoticia() {
             error
         );
 
-
         mostrarError(
             "No pudimos encontrar esta noticia."
         );
 
-
         return;
     }
-
 
     if (!data) {
 
@@ -109,23 +102,18 @@ async function cargarNoticia() {
             "La noticia no existe."
         );
 
-
         return;
     }
 
 
-    // ======================================
-    // REGISTRAR VISITA
-    // ======================================
+    // Registrar visita
 
     await registrarVisita(
         data.id
     );
 
 
-    // ======================================
-    // OBTENER CANTIDAD DE VISITAS
-    // ======================================
+    // Obtener cantidad de visitas
 
     const visitas =
         await obtenerVisitas(
@@ -133,9 +121,7 @@ async function cargarNoticia() {
         );
 
 
-    // ======================================
-    // MOSTRAR NOTICIA
-    // ======================================
+    // Mostrar noticia
 
     mostrarNoticia(
         data,
@@ -153,26 +139,23 @@ async function registrarVisita(
 ) {
 
     if (!idNoticia) {
-
         return;
     }
 
 
     /*
-        Evitamos contar varias veces
-        la misma noticia durante 30 minutos
-        desde el mismo navegador.
+        Evita contar varias veces
+        la misma noticia durante
+        30 minutos desde el mismo navegador.
     */
 
     const clave =
         `f360_visita_${idNoticia}`;
 
-
     const ultimaVisita =
         localStorage.getItem(
             clave
         );
-
 
     const ahora =
         Date.now();
@@ -217,13 +200,12 @@ async function registrarVisita(
             "F360 - Error registrando visita:",
             error
         );
-
     }
 }
 
 
 // ==========================================
-// OBTENER VISITAS DE LA NOTICIA
+// OBTENER VISITAS
 // ==========================================
 
 async function obtenerVisitas(
@@ -236,25 +218,28 @@ async function obtenerVisitas(
     }
 
 
+    /*
+        IMPORTANTE:
+
+        No consultamos directamente
+        noticia_visitas porque esa tabla
+        está protegida.
+
+        Usamos la función de Supabase
+        que devuelve solamente el total.
+    */
+
     const {
-        count,
+        data,
         error
     } =
-        await supabaseClient
-            .from("noticia_visitas")
-            .select(
-                "id",
-                {
-                    count:
-                        "exact",
-                    head:
-                        true
-                }
-            )
-            .eq(
-                "noticia_id",
-                idNoticia
-            );
+        await supabaseClient.rpc(
+            "obtener_visitas_noticia",
+            {
+                p_noticia_id:
+                    idNoticia
+            }
+        );
 
 
     if (error) {
@@ -264,12 +249,13 @@ async function obtenerVisitas(
             error
         );
 
-
         return 0;
     }
 
 
-    return count || 0;
+    return Number(
+        data
+    ) || 0;
 }
 
 
@@ -307,11 +293,6 @@ async function mostrarNoticia(
     noticia,
     visitas
 ) {
-
-
-    // ======================================
-    // DATOS
-    // ======================================
 
     const titulo =
         noticia.titulo ||
@@ -386,7 +367,7 @@ async function mostrarNoticia(
 
 
     // ======================================
-    // URL DE LA NOTICIA
+    // URL
     // ======================================
 
     const urlNoticia =
@@ -483,14 +464,10 @@ async function mostrarNoticia(
 
 
     // ======================================
-    // HTML DE LA NOTICIA
+    // HTML
     // ======================================
 
     noticiaContainer.innerHTML = `
-
-        <!-- =================================
-             VOLVER
-        ================================== -->
 
         <div
             class="noticia-navegacion"
@@ -507,11 +484,6 @@ async function mostrarNoticia(
 
         </div>
 
-
-
-        <!-- =================================
-             NOTICIA
-        ================================== -->
 
         <article
             class="noticia"
@@ -534,7 +506,6 @@ async function mostrarNoticia(
             </div>
 
 
-
             <!-- TÍTULO -->
 
             <h1
@@ -546,7 +517,6 @@ async function mostrarNoticia(
                 )}
 
             </h1>
-
 
 
             <!-- BAJADA -->
@@ -563,14 +533,12 @@ async function mostrarNoticia(
             </p>
 
 
-
             <!-- IMAGEN -->
 
             ${imagenHTML}
 
 
-
-            <!-- AUTOR + FECHA + VISITAS -->
+            <!-- AUTOR / FECHA / VISITAS -->
 
             <div
                 class="noticia-meta"
@@ -602,9 +570,7 @@ async function mostrarNoticia(
                 <span
                     class="noticia-meta-separador"
                 >
-
                     •
-
                 </span>
 
 
@@ -625,9 +591,7 @@ async function mostrarNoticia(
                 <span
                     class="noticia-meta-separador"
                 >
-
                     •
-
                 </span>
 
 
@@ -643,9 +607,7 @@ async function mostrarNoticia(
                 <span
                     class="noticia-meta-separador"
                 >
-
                     •
-
                 </span>
 
 
@@ -671,10 +633,7 @@ async function mostrarNoticia(
             </div>
 
 
-
-            <!-- =================================
-                 CONTENIDO
-            ================================== -->
+            <!-- CONTENIDO -->
 
             <div
                 class="noticia-contenido"
@@ -686,10 +645,7 @@ async function mostrarNoticia(
             </div>
 
 
-
-            <!-- =================================
-                 BOTONES
-            ================================== -->
+            <!-- BOTONES -->
 
             <div
                 class="noticia-acciones"
@@ -726,10 +682,7 @@ async function mostrarNoticia(
         </article>
 
 
-
-        <!-- =================================
-             RELACIONADAS
-        ================================== -->
+        <!-- RELACIONADAS -->
 
         <section
             class="noticias-relacionadas"
@@ -895,7 +848,6 @@ function actualizarSEO(
             "content",
             datos.titulo
         );
-
     }
 }
 
@@ -1077,7 +1029,6 @@ async function cargarRelacionadas(
             error
         );
 
-
         return;
     }
 
@@ -1089,7 +1040,6 @@ async function cargarRelacionadas(
 
         contenedor.innerHTML =
             "";
-
 
         return;
     }
@@ -1125,7 +1075,7 @@ async function cargarRelacionadas(
 
 
 // ==========================================
-// CREAR NOTICIA RELACIONADA
+// CREAR RELACIONADA
 // ==========================================
 
 function crearRelacionada(
@@ -1171,7 +1121,6 @@ function crearRelacionada(
             class="relacionada-card"
         >
 
-
             <div
                 class="relacionada-imagen"
             >
@@ -1211,7 +1160,6 @@ function crearRelacionada(
                 </a>
 
             </div>
-
 
         </article>
 
@@ -1499,9 +1447,6 @@ function formatearContenido(
     /*
         Cada Enter que hagas en el panel
         genera un párrafo nuevo.
-
-        También funciona si dejás una
-        línea en blanco entre párrafos.
     */
 
     const parrafos =
