@@ -156,6 +156,41 @@
 
 
     <!-- =========================
+         DATOS ESTRUCTURADOS
+         ORGANIZACIÓN + SITIO WEB
+    ========================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+
+            {
+                "@type": "Organization",
+                "@id": "https://futbol-360.vercel.app/#organization",
+                "name": "F360",
+                "url": "https://futbol-360.vercel.app/",
+                "description": "F360, todo el fútbol argentino y la Selección en un solo lugar."
+            },
+
+            {
+                "@type": "WebSite",
+                "@id": "https://futbol-360.vercel.app/#website",
+                "name": "F360",
+                "url": "https://futbol-360.vercel.app/",
+                "description": "Todo el fútbol argentino y la Selección en un solo lugar.",
+                "inLanguage": "es-AR",
+                "publisher": {
+                    "@id": "https://futbol-360.vercel.app/#organization"
+                }
+            }
+
+        ]
+    }
+    </script>
+
+
+    <!-- =========================
          CSS
     ========================== -->
 
