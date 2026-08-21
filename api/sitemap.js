@@ -1,9 +1,30 @@
+// ==========================================
+// F360 - SITEMAP DINÁMICO
+// ==========================================
+
+
+// ==========================================
+// CONFIGURACIÓN SUPABASE
+// ==========================================
+
 const SUPABASE_URL =
     "https://sxouqngithkiflbhdcii.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_izftRBeVdu2h_AKkfhaGOA_XJpY1PKH";
 
+
+// ==========================================
+// DOMINIO
+// ==========================================
+
+const DOMINIO =
+    "https://futbol-360.vercel.app";
+
+
+// ==========================================
+// FUNCIÓN PRINCIPAL
+// ==========================================
 
 export default async function handler(
     request,
@@ -12,18 +33,29 @@ export default async function handler(
 
     try {
 
+        // ======================================
+        // CONSULTAR NOTICIAS PUBLICADAS
+        // ======================================
+
         const resultado =
             await fetch(
                 `${SUPABASE_URL}/rest/v1/noticias?select=id,created_at&publicada=eq.true&order=created_at.desc`,
                 {
+                    method: "GET",
+
                     headers: {
                         "apikey": SUPABASE_KEY,
+
                         "Authorization":
                             `Bearer ${SUPABASE_KEY}`
                     }
                 }
             );
 
+
+        // ======================================
+        // COMPROBAR RESPUESTA
+        // ======================================
 
         if (!resultado.ok) {
 
@@ -34,45 +66,56 @@ export default async function handler(
         }
 
 
+        // ======================================
+        // OBTENER NOTICIAS
+        // ======================================
+
         const noticias =
             await resultado.json();
 
 
-        const dominio =
-            "https://futbol-360.vercel.app";
-
+        // ======================================
+        // URLS FIJAS
+        // ======================================
 
         const urls = [
 
-            `
-                <url>
-                    <loc>${dominio}/</loc>
-                </url>
-            `,
+            {
+                loc:
+                    `${DOMINIO}/`
+            },
 
-            `
-                <url>
-                    <loc>${dominio}/categoria.html?categoria=Fútbol%20Argentino</loc>
-                </url>
-            `,
+            {
+                loc:
+                    `${DOMINIO}/categoria.html?categoria=Fútbol%20Argentino`
+            },
 
-            `
-                <url>
-                    <loc>${dominio}/categoria.html?categoria=Selección</loc>
-                </url>
-            `,
+            {
+                loc:
+                    `${DOMINIO}/categoria.html?categoria=Selección`
+            },
 
-            `
-                <url>
-                    <loc>${dominio}/buscar.html</loc>
-                </url>
-            `
+            {
+                loc:
+                    `${DOMINIO}/buscar.html`
+            }
 
         ];
 
 
+        // ======================================
+        // AGREGAR NOTICIAS
+        // ======================================
+
         noticias.forEach(
             function(noticia) {
+
+                if (!noticia.id) {
+
+                    return;
+
+                }
+
 
                 const id =
                     encodeURIComponent(
@@ -80,56 +123,98 @@ export default async function handler(
                     );
 
 
-                const fecha =
+                let lastmod =
+                    null;
+
+
+                if (
                     noticia.created_at
-                        ? new Date(
+                ) {
+
+                    const fecha =
+                        new Date(
                             noticia.created_at
-                        ).toISOString()
-                        : null;
+                        );
 
 
-                urls.push(`
+                    if (
+                        !Number.isNaN(
+                            fecha.getTime()
+                        )
+                    ) {
 
-                    <url>
+                        lastmod =
+                            fecha.toISOString();
 
-                        <loc>
-                            ${dominio}/noticia.html?id=${id}
-                        </loc>
+                    }
 
-                        ${
-                            fecha
-                            ?
-                            `
-                                <lastmod>
-                                    ${fecha}
-                                </lastmod>
-                            `
-                            :
-                            ""
-                        }
+                }
 
-                    </url>
 
-                `);
+                urls.push({
+
+                    loc:
+                        `${DOMINIO}/noticia.html?id=${id}`,
+
+                    lastmod:
+                        lastmod
+
+                });
 
             }
         );
 
 
-        const xml = `
+        // ======================================
+        // GENERAR XML
+        // ======================================
 
-<?xml version="1.0" encoding="UTF-8"?>
+        const contenidoURLs =
+            urls
+                .map(
+                    function(url) {
 
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
+                        let xml =
 
-    ${urls.join("\n")}
+`    <url>
+        <loc>${escaparXML(url.loc)}</loc>`;
 
-</urlset>
 
-        `.trim();
 
+                        if (
+                            url.lastmod
+                        ) {
+
+                            xml +=
+`
+        <lastmod>${url.lastmod}</lastmod>`;
+
+                        }
+
+
+                        xml +=
+`
+    </url>`;
+
+
+                        return xml;
+
+                    }
+                )
+                .join("\n");
+
+
+        const xml =
+
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${contenidoURLs}
+</urlset>`;
+
+
+        // ======================================
+        // HEADERS
+        // ======================================
 
         response.setHeader(
             "Content-Type",
@@ -143,44 +228,35 @@ export default async function handler(
         );
 
 
-        response.status(
-            200
-        ).send(
-            xml
-        );
+        // ======================================
+        // RESPUESTA
+        // ======================================
+
+        response
+            .status(200)
+            .send(xml);
 
 
     } catch (error) {
 
+        // ======================================
+        // ERROR
+        // ======================================
+
         console.error(
-            "Error generando sitemap:",
+            "F360 - Error generando sitemap:",
             error
         );
 
 
-        const dominio =
-            "https://futbol-360.vercel.app";
+        const xmlError =
 
-
-        const sitemapError = `
-
-<?xml version="1.0" encoding="UTF-8"?>
-
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
-
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-
-        <loc>
-            ${dominio}/
-        </loc>
-
+        <loc>${DOMINIO}/</loc>
     </url>
-
-</urlset>
-
-        `.trim();
+</urlset>`;
 
 
         response.setHeader(
@@ -189,12 +265,46 @@ export default async function handler(
         );
 
 
-        response.status(
-            200
-        ).send(
-            sitemapError
-        );
+        response
+            .status(200)
+            .send(xmlError);
 
     }
+
+}
+
+
+// ==========================================
+// ESCAPAR XML
+// ==========================================
+
+function escaparXML(valor) {
+
+    return String(valor)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&apos;"
+        );
 
 }
