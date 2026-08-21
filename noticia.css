@@ -16,7 +16,11 @@
 body {
     background: #f4f4f4;
     color: #111;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
 
@@ -27,6 +31,7 @@ body {
 .contenedor {
     width: 90%;
     max-width: 1200px;
+
     margin: auto;
 }
 
@@ -37,7 +42,9 @@ body {
 
 .header {
     background: white;
-    border-bottom: 1px solid #ddd;
+
+    border-bottom:
+        1px solid #ddd;
 }
 
 
@@ -45,17 +52,24 @@ body {
     min-height: 110px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 }
 
 
 .logo {
     font-size: 48px;
+
     font-weight: 900;
+
     font-style: italic;
+
     letter-spacing: -5px;
+
     color: #111;
+
     text-decoration: none;
 }
 
@@ -67,6 +81,7 @@ body {
 
 .lema {
     font-size: 15px;
+
     color: #555;
 }
 
@@ -84,6 +99,7 @@ body {
     min-height: 60px;
 
     display: flex;
+
     align-items: center;
 
     gap: 45px;
@@ -92,9 +108,11 @@ body {
 
 .menu a {
     color: white;
+
     text-decoration: none;
 
     font-size: 14px;
+
     font-weight: bold;
 }
 
@@ -104,20 +122,18 @@ body {
 }
 
 
-.menu .buscar {
-    margin-left: auto;
-}
-
-
 /* ==========================================
-   PÁGINA DE NOTICIA
+   PÁGINA
 ========================================== */
 
 .noticia-pagina {
     width: 90%;
+
     max-width: 1000px;
 
-    margin: 35px auto 80px;
+    margin:
+        35px auto
+        80px;
 
     padding: 0;
 }
@@ -128,7 +144,7 @@ body {
 ========================================== */
 
 .noticia-navegacion {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 
@@ -140,6 +156,7 @@ body {
     text-decoration: none;
 
     font-size: 13px;
+
     font-weight: bold;
 }
 
@@ -150,7 +167,7 @@ body {
 
 
 /* ==========================================
-   ARTÍCULO
+   NOTICIA
 ========================================== */
 
 .noticia {
@@ -158,26 +175,89 @@ body {
 
     width: 100%;
 
-    padding: 0 55px 55px;
+    padding:
+        45px
+        45px
+        55px;
 
     overflow: hidden;
 }
 
 
 /* ==========================================
-   IMAGEN PRINCIPAL
+   CATEGORÍA
+========================================== */
+
+.noticia-categoria {
+    color: #168cff;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    margin-bottom: 12px;
+}
+
+
+/* ==========================================
+   TÍTULO
+========================================== */
+
+.noticia h1 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 56px;
+
+    line-height: 1.04;
+
+    letter-spacing: -1.5px;
+
+    color: #111;
+
+    margin:
+        0 0
+        20px;
+}
+
+
+/* ==========================================
+   BAJADA
+========================================== */
+
+.noticia-bajada {
+    font-size: 21px;
+
+    line-height: 1.5;
+
+    color: #555;
+
+    margin:
+        0 0
+        30px;
+
+    max-width: 900px;
+}
+
+
+/* ==========================================
+   IMAGEN
 ========================================== */
 
 .noticia-imagen-contenedor {
-    width: calc(100% + 110px);
+    width: 100%;
 
-    margin-left: -55px;
-
-    margin-bottom: 22px;
-
-    background: #111;
+    margin:
+        0 0
+        22px;
 
     overflow: hidden;
+
+    background: #111;
 }
 
 
@@ -185,33 +265,40 @@ body {
     display: block;
 
     width: 100%;
+
     height: auto;
 
-    max-height: 560px;
+    max-height: 600px;
 
     object-fit: cover;
 }
 
 
 /* ==========================================
-   METADATA
+   AUTOR / FECHA
 ========================================== */
 
 .noticia-meta {
-    width: 100%;
-
     display: flex;
+
     align-items: center;
 
     flex-wrap: wrap;
 
     gap: 9px;
 
-    padding: 0 0 15px;
+    width: 100%;
 
-    margin-bottom: 22px;
+    padding:
+        0 0
+        15px;
 
-    border-bottom: 1px solid #ddd;
+    margin:
+        0 0
+        30px;
+
+    border-bottom:
+        1px solid #ddd;
 
     color: #777;
 
@@ -230,62 +317,14 @@ body {
 
 
 /* ==========================================
-   CATEGORÍA
-========================================== */
-
-.noticia-categoria {
-    color: #168cff;
-
-    font-size: 13px;
-
-    font-weight: bold;
-
-    text-transform: uppercase;
-
-    margin-bottom: 10px;
-}
-
-
-/* ==========================================
-   TÍTULO
-========================================== */
-
-.noticia h1 {
-    font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 54px;
-
-    line-height: 1.05;
-
-    color: #111;
-
-    margin: 0 0 20px;
-}
-
-
-/* ==========================================
-   BAJADA
-========================================== */
-
-.noticia-bajada {
-    font-family: Arial, Helvetica, sans-serif;
-
-    font-size: 20px;
-
-    line-height: 1.55;
-
-    color: #555;
-
-    margin: 0 0 32px;
-}
-
-
-/* ==========================================
    CONTENIDO
 ========================================== */
 
 .noticia-contenido {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 19px;
 
@@ -298,7 +337,9 @@ body {
 
 
 .noticia-contenido p {
-    margin: 0 0 24px;
+    margin:
+        0 0
+        24px;
 }
 
 
@@ -324,18 +365,22 @@ body {
 
     padding-top: 25px;
 
-    border-top: 1px solid #ddd;
+    border-top:
+        1px solid #ddd;
 }
 
 
 .accion-noticia {
     background: white;
 
-    border: 1px solid #ccc;
+    border:
+        1px solid #ccc;
 
     color: #111;
 
-    padding: 11px 17px;
+    padding:
+        11px
+        17px;
 
     font-size: 11px;
 
@@ -345,20 +390,21 @@ body {
 
     transition:
         color 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
+        border-color 0.2s ease;
 }
 
 
 .accion-noticia:hover {
-    border-color: #168cff;
     color: #168cff;
+
+    border-color: #168cff;
 }
 
 
 .accion-noticia.whatsapp:hover {
-    border-color: #25d366;
     color: #25d366;
+
+    border-color: #25d366;
 }
 
 
@@ -372,7 +418,10 @@ body {
 
 
 .relacionadas-titulo {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 30px;
 
@@ -393,7 +442,8 @@ body {
 .relacionada-card {
     background: white;
 
-    border: 1px solid #ddd;
+    border:
+        1px solid #ddd;
 
     overflow: hidden;
 }
@@ -401,6 +451,7 @@ body {
 
 .relacionada-imagen {
     width: 100%;
+
     height: 170px;
 
     background: #111;
@@ -411,6 +462,7 @@ body {
 
 .relacionada-imagen img {
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
@@ -421,11 +473,13 @@ body {
 
 .relacionada-placeholder {
     width: 100%;
+
     height: 100%;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     color: #168cff;
@@ -463,7 +517,9 @@ body {
 
     color: #111;
 
-    font-family: Georgia, serif;
+    font-family:
+        Georgia,
+        serif;
 
     font-size: 20px;
 
@@ -553,6 +609,11 @@ footer {
 }
 
 
+.footer-contenido .copyright {
+    font-size: 12px;
+}
+
+
 /* ==========================================
    TABLET
 ========================================== */
@@ -560,16 +621,10 @@ footer {
 @media (max-width: 900px) {
 
     .noticia {
-        padding-left: 35px;
-        padding-right: 35px;
-        padding-bottom: 40px;
-    }
-
-
-    .noticia-imagen-contenedor {
-        width: calc(100% + 70px);
-
-        margin-left: -35px;
+        padding:
+            35px
+            35px
+            45px;
     }
 
 
@@ -579,7 +634,8 @@ footer {
 
 
     .relacionadas-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+            1fr 1fr;
     }
 
 }
@@ -621,7 +677,9 @@ footer {
 
         overflow-x: auto;
 
-        padding: 15px 0;
+        padding:
+            15px
+            0;
 
         white-space: nowrap;
     }
@@ -637,15 +695,41 @@ footer {
 
 
     .noticia {
-        padding: 0 20px 35px;
+        padding:
+            30px
+            20px
+            35px;
+    }
+
+
+    .noticia-categoria {
+        font-size: 12px;
+
+        margin-bottom: 9px;
+    }
+
+
+    .noticia h1 {
+        font-size: 36px;
+
+        line-height: 1.08;
+
+        letter-spacing: -0.5px;
+
+        margin-bottom: 16px;
+    }
+
+
+    .noticia-bajada {
+        font-size: 18px;
+
+        line-height: 1.5;
+
+        margin-bottom: 25px;
     }
 
 
     .noticia-imagen-contenedor {
-        width: calc(100% + 40px);
-
-        margin-left: -20px;
-
         margin-bottom: 18px;
     }
 
@@ -660,32 +744,7 @@ footer {
 
         gap: 7px;
 
-        margin-bottom: 18px;
-    }
-
-
-    .noticia-categoria {
-        font-size: 12px;
-
-        margin-bottom: 8px;
-    }
-
-
-    .noticia h1 {
-        font-size: 36px;
-
-        line-height: 1.08;
-
-        margin-bottom: 17px;
-    }
-
-
-    .noticia-bajada {
-        font-size: 18px;
-
-        line-height: 1.5;
-
-        margin-bottom: 26px;
+        margin-bottom: 25px;
     }
 
 
