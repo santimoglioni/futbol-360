@@ -4,7 +4,7 @@
 
 
 // ==========================================
-// CONEXIÓN CON SUPABASE
+// SUPABASE
 // ==========================================
 
 const SUPABASE_URL =
@@ -32,14 +32,13 @@ const noticiaContainer =
 
 
 // ==========================================
-// OBTENER ID DE LA NOTICIA
+// ID DE LA NOTICIA
 // ==========================================
 
 const parametros =
     new URLSearchParams(
         window.location.search
     );
-
 
 const noticiaId =
     parametros.get("id");
@@ -185,21 +184,13 @@ async function mostrarNoticia(noticia) {
 
 
     // ======================================
-    // URL LIMPIA
+    // URL
     // ======================================
 
     const urlLimpia =
         crearURLLimpia(
             noticia.id
         );
-
-
-    // ======================================
-    // TÍTULO SEO
-    // ======================================
-
-    const tituloSEO =
-        `${titulo} | F360`;
 
 
     // ======================================
@@ -212,7 +203,7 @@ async function mostrarNoticia(noticia) {
             titulo,
 
         tituloSEO:
-            tituloSEO,
+            `${titulo} | F360`,
 
         descripcion:
             descripcion,
@@ -251,12 +242,8 @@ async function mostrarNoticia(noticia) {
                 <img
                     class="noticia-imagen"
                     itemprop="image"
-                    src="${escapeHTML(
-                        imagen
-                    )}"
-                    alt="${escapeHTML(
-                        titulo
-                    )}"
+                    src="${escapeHTML(imagen)}"
+                    alt="${escapeHTML(titulo)}"
                     loading="eager"
                 >
 
@@ -277,7 +264,7 @@ async function mostrarNoticia(noticia) {
 
 
     // ======================================
-    // CONTENIDO
+    // HTML DE LA NOTICIA
     // ======================================
 
     noticiaContainer.innerHTML = `
@@ -302,58 +289,16 @@ async function mostrarNoticia(noticia) {
             itemtype="https://schema.org/NewsArticle"
         >
 
-            <!-- URL PRINCIPAL -->
+            <!-- =========================
+                 IMAGEN
+            ========================== -->
 
-            <meta
-                itemprop="mainEntityOfPage"
-                content="${escapeHTML(
-                    urlLimpia
-                )}"
-            >
+            ${imagenHTML}
 
 
-            <!-- CATEGORÍA -->
-
-            <div
-                class="noticia-categoria"
-                itemprop="articleSection"
-            >
-
-                ${escapeHTML(
-                    categoria
-                )}
-
-            </div>
-
-
-            <!-- TÍTULO -->
-
-            <h1
-                itemprop="headline"
-            >
-
-                ${escapeHTML(
-                    titulo
-                )}
-
-            </h1>
-
-
-            <!-- BAJADA -->
-
-            <p
-                class="noticia-bajada"
-                itemprop="description"
-            >
-
-                ${escapeHTML(
-                    descripcion
-                )}
-
-            </p>
-
-
-            <!-- AUTOR -->
+            <!-- =========================
+                 METADATA
+            ========================== -->
 
             <div class="noticia-meta">
 
@@ -367,12 +312,8 @@ async function mostrarNoticia(noticia) {
                         itemtype="https://schema.org/Organization"
                     >
 
-                        <span
-                            itemprop="name"
-                        >
-
+                        <span itemprop="name">
                             F360
-
                         </span>
 
                         <meta
@@ -385,62 +326,97 @@ async function mostrarNoticia(noticia) {
                 </span>
 
 
-                <span
-                    class="noticia-meta-separador"
-                >
-
+                <span class="noticia-meta-separador">
                     •
-
                 </span>
 
 
-                <!-- FECHA PUBLICACIÓN -->
-
                 <time
                     itemprop="datePublished"
-                    datetime="${escapeHTML(
-                        fechaISO
-                    )}"
+                    datetime="${escapeHTML(fechaISO)}"
                 >
 
-                    ${escapeHTML(
-                        fechaVisible
-                    )}
+                    ${escapeHTML(fechaVisible)}
 
                 </time>
 
 
-                <span
-                    class="noticia-meta-separador"
-                >
-
+                <span class="noticia-meta-separador">
                     •
-
                 </span>
 
 
                 <span>
-
-                    ${escapeHTML(
-                        horaVisible
-                    )}
-
+                    ${escapeHTML(horaVisible)}
                 </span>
 
 
-                <!-- FECHA MODIFICACIÓN -->
-
                 <meta
                     itemprop="dateModified"
-                    content="${escapeHTML(
-                        fechaModificacionISO
-                    )}"
+                    content="${escapeHTML(fechaModificacionISO)}"
                 >
 
             </div>
 
 
-            <!-- ACCIONES -->
+            <!-- =========================
+                 CATEGORÍA
+            ========================== -->
+
+            <div
+                class="noticia-categoria"
+                itemprop="articleSection"
+            >
+
+                ${escapeHTML(categoria)}
+
+            </div>
+
+
+            <!-- =========================
+                 TÍTULO
+            ========================== -->
+
+            <h1 itemprop="headline">
+
+                ${escapeHTML(titulo)}
+
+            </h1>
+
+
+            <!-- =========================
+                 BAJADA
+            ========================== -->
+
+            <p
+                class="noticia-bajada"
+                itemprop="description"
+            >
+
+                ${escapeHTML(descripcion)}
+
+            </p>
+
+
+            <!-- =========================
+                 CUERPO
+            ========================== -->
+
+            <div
+                class="noticia-contenido"
+                itemprop="articleBody"
+            >
+
+                ${formatearContenido(
+                    noticia.contenido
+                )}
+
+            </div>
+
+
+            <!-- =========================
+                 ACCIONES
+            ========================== -->
 
             <div class="noticia-acciones">
 
@@ -448,9 +424,7 @@ async function mostrarNoticia(noticia) {
                     type="button"
                     class="accion-noticia whatsapp"
                     onclick='compartirWhatsApp(
-                        ${JSON.stringify(
-                            textoWhatsApp
-                        )}
+                        ${JSON.stringify(textoWhatsApp)}
                     )'
                 >
 
@@ -471,30 +445,12 @@ async function mostrarNoticia(noticia) {
 
             </div>
 
-
-            <!-- IMAGEN -->
-
-            ${imagenHTML}
-
-
-            <!-- CONTENIDO -->
-
-            <div
-                class="noticia-contenido"
-                itemprop="articleBody"
-            >
-
-                ${formatearContenido(
-                    noticia.contenido
-                )}
-
-            </div>
-
-
         </article>
 
 
-        <!-- NOTICIAS RELACIONADAS -->
+        <!-- =========================
+             RELACIONADAS
+        ========================== -->
 
         <section
             class="noticias-relacionadas"
@@ -507,7 +463,7 @@ async function mostrarNoticia(noticia) {
 
 
     // ======================================
-    // SCHEMA NEWSARTICLE
+    // SCHEMA
     // ======================================
 
     crearSchemaNoticia({
@@ -547,7 +503,7 @@ async function mostrarNoticia(noticia) {
 
 
 // ==========================================
-// CREAR URL LIMPIA
+// URL DE LA NOTICIA
 // ==========================================
 
 function crearURLLimpia(id) {
@@ -561,22 +517,14 @@ function crearURLLimpia(id) {
 
 
 // ==========================================
-// ACTUALIZAR SEO
+// SEO
 // ==========================================
 
 function actualizarSEO(datos) {
 
-    // ======================================
-    // TITLE
-    // ======================================
-
     document.title =
         datos.tituloSEO;
 
-
-    // ======================================
-    // DESCRIPTION
-    // ======================================
 
     actualizarMeta(
         "meta-description",
@@ -587,20 +535,12 @@ function actualizarSEO(datos) {
     );
 
 
-    // ======================================
-    // CANONICAL
-    // ======================================
-
     actualizarMeta(
         "canonical-url",
         "href",
         datos.url
     );
 
-
-    // ======================================
-    // OPEN GRAPH
-    // ======================================
 
     actualizarMeta(
         "og-title",
@@ -644,28 +584,6 @@ function actualizarSEO(datos) {
     );
 
 
-    if (datos.imagen) {
-
-        actualizarMeta(
-            "og-image",
-            "content",
-            datos.imagen
-        );
-
-
-        actualizarMeta(
-            "og-image-alt",
-            "content",
-            datos.titulo
-        );
-
-    }
-
-
-    // ======================================
-    // TWITTER / X
-    // ======================================
-
     actualizarMeta(
         "twitter-title",
         "content",
@@ -681,6 +599,20 @@ function actualizarSEO(datos) {
 
 
     if (datos.imagen) {
+
+        actualizarMeta(
+            "og-image",
+            "content",
+            datos.imagen
+        );
+
+
+        actualizarMeta(
+            "og-image-alt",
+            "content",
+            datos.titulo
+        );
+
 
         actualizarMeta(
             "twitter-image",
@@ -710,9 +642,7 @@ function actualizarMeta(
 ) {
 
     const elemento =
-        document.getElementById(
-            id
-        );
+        document.getElementById(id);
 
 
     if (!elemento) {
@@ -729,7 +659,7 @@ function actualizarMeta(
 
 
 // ==========================================
-// LIMITAR DESCRIPTION
+// DESCRIPTION
 // ==========================================
 
 function limitarDescripcion(texto) {
@@ -848,6 +778,7 @@ async function cargarRelacionadas(
                     }
                 )
                 .limit(3);
+
     }
 
 
@@ -958,9 +889,7 @@ function crearRelacionada(
 
             <div class="relacionada-contenido">
 
-                <span
-                    class="relacionada-categoria"
-                >
+                <span class="relacionada-categoria">
 
                     ${escapeHTML(
                         noticia.categoria ||
@@ -1012,7 +941,7 @@ function compartirWhatsApp(
 
 
 // ==========================================
-// COPIAR ENLACE LIMPIO
+// COPIAR ENLACE
 // ==========================================
 
 async function copiarEnlace() {
@@ -1067,6 +996,7 @@ async function copiarEnlace() {
 
 
         mostrarMensajeCopiado();
+
     }
 }
 
@@ -1098,7 +1028,7 @@ function mostrarMensajeCopiado() {
 
 
     setTimeout(
-        function() {
+        function () {
 
             boton.textContent =
                 textoOriginal;
@@ -1126,6 +1056,7 @@ function crearSchemaNoticia(
     if (schemaAnterior) {
 
         schemaAnterior.remove();
+
     }
 
 
@@ -1207,24 +1138,14 @@ function crearSchemaNoticia(
     };
 
 
-    // ======================================
-    // IMAGEN DE LA NOTICIA
-    // ======================================
-
     if (datos.imagen) {
 
         schema.image = [
-
             datos.imagen
-
         ];
 
     }
 
-
-    // ======================================
-    // SCRIPT JSON-LD
-    // ======================================
 
     const script =
         document.createElement(
@@ -1382,12 +1303,7 @@ function mostrarError(
             </h2>
 
 
-            <br>
-
-
-            <a
-                href="index.html"
-            >
+            <a href="index.html">
 
                 ← Volver a F360
 
