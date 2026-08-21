@@ -118,9 +118,19 @@ async function cargarNoticia() {
     // REGISTRAR VISITA
     // ======================================
 
-    registrarVisita(
+    await registrarVisita(
         data.id
     );
+
+
+    // ======================================
+    // OBTENER CANTIDAD DE VISITAS
+    // ======================================
+
+    const visitas =
+        await obtenerVisitas(
+            data.id
+        );
 
 
     // ======================================
@@ -128,7 +138,8 @@ async function cargarNoticia() {
     // ======================================
 
     mostrarNoticia(
-        data
+        data,
+        visitas
     );
 }
 
@@ -212,11 +223,89 @@ async function registrarVisita(
 
 
 // ==========================================
+// OBTENER VISITAS DE LA NOTICIA
+// ==========================================
+
+async function obtenerVisitas(
+    idNoticia
+) {
+
+    if (!idNoticia) {
+
+        return 0;
+    }
+
+
+    const {
+        count,
+        error
+    } =
+        await supabaseClient
+            .from("noticia_visitas")
+            .select(
+                "id",
+                {
+                    count:
+                        "exact",
+                    head:
+                        true
+                }
+            )
+            .eq(
+                "noticia_id",
+                idNoticia
+            );
+
+
+    if (error) {
+
+        console.error(
+            "F360 - Error obteniendo visitas:",
+            error
+        );
+
+
+        return 0;
+    }
+
+
+    return count || 0;
+}
+
+
+// ==========================================
+// FORMATO DE VISITAS
+// ==========================================
+
+function formatoVisitas(
+    cantidad
+) {
+
+    const numero =
+        Number(
+            cantidad
+        ) || 0;
+
+
+    if (
+        numero === 1
+    ) {
+
+        return "1 visita";
+    }
+
+
+    return `${numero} visitas`;
+}
+
+
+// ==========================================
 // MOSTRAR NOTICIA
 // ==========================================
 
 async function mostrarNoticia(
-    noticia
+    noticia,
+    visitas
 ) {
 
 
@@ -481,7 +570,7 @@ async function mostrarNoticia(
 
 
 
-            <!-- AUTOR Y FECHA -->
+            <!-- AUTOR + FECHA + VISITAS -->
 
             <div
                 class="noticia-meta"
@@ -546,6 +635,27 @@ async function mostrarNoticia(
 
                     ${escapeHTML(
                         horaVisible
+                    )}
+
+                </span>
+
+
+                <span
+                    class="noticia-meta-separador"
+                >
+
+                    •
+
+                </span>
+
+
+                <span
+                    class="noticia-visitas"
+                    aria-label="Cantidad de visitas"
+                >
+
+                    👁️ ${formatoVisitas(
+                        visitas
                     )}
 
                 </span>
